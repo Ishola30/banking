@@ -3,305 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Banking App</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+    <title>Banc of California - Sign Up</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f3f4f6;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+        }
+        .container {
+            max-width: 420px;
+        }
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
         }
     </style>
 </head>
-<body class="bg-gray-100">
-
-    <!-- Auth Container (Login/Signup) -->
-    <div id="auth-container" class="bg-white p-8 md:p-12 rounded-2xl shadow-xl w-full max-w-md mx-4">
-        <div class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-gray-800">Welcome</h1>
-            <p class="text-gray-500 mt-2">Log in or create an account</p>
-        </div>
-
-        <div id="login-form-group">
-            <div class="mb-4">
-                <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
-                <input type="email" id="email" placeholder="you@example.com" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <div class="mb-6">
-                <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
-                <input type="password" id="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            </div>
-            <button id="login-btn" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-lg hover:bg-blue-700 transition-colors duration-200">Log In</button>
-            <button id="signup-btn" class="w-full bg-green-600 text-white font-semibold py-3 rounded-lg mt-3 hover:bg-green-700 transition-colors duration-200">Sign Up</button>
-        </div>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="container bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome</h1>
+        <p class="text-center text-gray-500 mb-8">Log in or create an account</p>
         
-        <div id="status-message" class="text-center mt-6 text-sm font-medium"></div>
-
-        <div id="logged-in-container" class="hidden text-center mt-6">
-            <h2 class="text-2xl font-semibold text-gray-800">You are logged in!</h2>
-            <p class="text-gray-600 mt-2">Your user ID is:</p>
-            <p id="user-id" class="break-all font-mono bg-gray-200 text-gray-700 p-2 rounded-md mt-2 text-sm select-all"></p>
-            <button id="logout-btn" class="mt-6 bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200">Log Out</button>
-        </div>
-    </div>
-
-    <!-- Bank Transfer Container -->
-    <div id="banking-container" class="hidden w-full max-w-md bg-white p-8 rounded-xl shadow-lg border border-gray-200 mx-4">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">My Banking App</h1>
-
-        <!-- User Balance Section -->
-        <div class="mb-8 p-4 bg-blue-100 rounded-lg text-blue-800 text-center">
-            <h2 class="text-lg font-medium">Current Balance</h2>
-            <p id="user-balance" class="text-4xl font-extrabold mt-1">$...</p>
-        </div>
-
-        <!-- Transfer Form Section -->
-        <h2 class="text-xl font-semibold text-gray-700 mb-4">Secure Transfer</h2>
-        <form id="transfer-form" class="space-y-6">
+        <form id="auth-form" class="space-y-4">
             <div>
-                <label for="recipient" class="block text-sm font-medium text-gray-700">Recipient</label>
-                <input type="text" id="recipient" name="recipient" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
+                <input type="email" id="email" class="form-input w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Email" required>
             </div>
-
             <div>
-                <label for="amount" class="block text-sm font-medium text-gray-700">Amount ($)</label>
-                <input type="number" id="amount" name="amount" required min="0.01" step="0.01" class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
+                <input type="password" id="password" class="form-input w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Password" required>
             </div>
-
-            <div>
-                <label for="verificationCode" class="block text-sm font-medium text-gray-700">Verification Code</label>
-                <input type="text" id="verificationCode" name="verificationCode" required class="mt-1 block w-full px-4 py-2 bg-gray-50 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 transition duration-150 ease-in-out">
+            <div id="message-box" class="text-center text-sm font-medium rounded-xl p-3" style="display: none;"></div>
+            <div class="space-y-3 pt-2">
+                <button type="button" id="login-button" class="w-full bg-blue-500 text-white font-semibold py-2 rounded-xl hover:bg-blue-600 transition-colors duration-200">Log In</button>
+                <button type="submit" id="signup-button" class="w-full bg-green-500 text-white font-semibold py-2 rounded-xl hover:bg-green-600 transition-colors duration-200">Sign Up</button>
             </div>
-
-            <button type="submit" id="submit-button" class="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out shadow-md">
-                Initiate Transfer
-            </button>
         </form>
-
-        <div id="transfer-status-message" class="mt-6 p-4 rounded-lg text-sm hidden"></div>
-        
-        <!-- Transaction History Section -->
-        <h2 class="text-xl font-semibold text-gray-700 mt-8 mb-4">Transaction History</h2>
-        <div id="transaction-list" class="space-y-2">
-            <p class="text-gray-500 text-center" id="loading-transactions">Loading transactions...</p>
-        </div>
-        
-        <!-- Logout Button for Banking UI -->
-        <button id="banking-logout-btn" class="mt-6 w-full bg-red-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-red-700 transition-colors duration-200">Log Out</button>
     </div>
 
-    <script type="module">
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    <!-- Supabase Client Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // IMPORTANT: Replace with your actual Supabase project URL and Anon Key
+        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
+        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
         
-        // --- Supabase Configuration ---
-        const supabaseUrl = 'https://hwvkhynvctsxqszgpid.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh3dmtiaHlueXZjdHNxc3pncGlkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY5OTAzNjksImV4cCI6MjA3MjU2NjM2OX0.vJ3LQRGAGwx6v4wTw8HLkFJqbQ60YXLZQyZ1gyxMo74';
-        const supabase = createClient(supabaseUrl, supabaseAnonKey);
-        
-        // --- UI Elements ---
-        const authContainer = document.getElementById('auth-container');
-        const bankingContainer = document.getElementById('banking-container');
-        
-        // Login elements
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const loginBtn = document.getElementById('login-btn');
-        const signupBtn = document.getElementById('signup-btn');
-        const statusMessage = document.getElementById('status-message');
-        const userIdDisplay = document.getElementById('user-id');
-        const authLogoutBtn = document.getElementById('logout-btn');
+        const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Banking elements
-        const userBalanceEl = document.getElementById('user-balance');
-        const transactionListEl = document.getElementById('transaction-list');
-        const loadingTransactionsEl = document.getElementById('loading-transactions');
-        const transferForm = document.getElementById('transfer-form');
-        const submitButton = document.getElementById('submit-button');
-        const transferStatusMessage = document.getElementById('transfer-status-message');
-        const bankingLogoutBtn = document.getElementById('banking-logout-btn');
-
-        let currentUserId = null;
-        let currentSessionToken = null;
-
-        // Function to display messages to the user (for auth UI)
-        const displayAuthMessage = (message, isError = false) => {
-            statusMessage.textContent = message;
-            statusMessage.classList.remove('text-green-600', 'text-red-600');
-            statusMessage.classList.add(isError ? 'text-red-600' : 'text-green-600');
-        };
-
-        // Function to display messages to the user (for transfer UI)
-        const displayTransferMessage = (message, isError = false) => {
-            transferStatusMessage.textContent = message;
-            transferStatusMessage.classList.remove('hidden', 'bg-green-100', 'text-green-700', 'bg-red-100', 'text-red-700');
-            transferStatusMessage.classList.add(isError ? 'bg-red-100' : 'bg-green-100', isError ? 'text-red-700' : 'text-green-700');
-        };
-
-        // Set up authentication state observer
-        supabase.auth.onAuthStateChange((event, session) => {
-            if (session) {
-                currentUserId = session.user.id;
-                currentSessionToken = session.access_token;
-                authContainer.classList.add('hidden');
-                bankingContainer.classList.remove('hidden');
-                userIdDisplay.textContent = currentUserId;
-                fetchUserData(currentUserId);
+        // Utility function to show messages to the user
+        const showMessage = (message, isError = false) => {
+            const messageBox = document.getElementById('message-box');
+            messageBox.textContent = message;
+            messageBox.style.display = 'block';
+            if (isError) {
+                messageBox.className = 'text-center text-sm font-medium rounded-xl p-3 bg-red-100 text-red-700';
             } else {
-                currentUserId = null;
-                currentSessionToken = null;
-                authContainer.classList.remove('hidden');
-                bankingContainer.classList.add('hidden');
-                displayAuthMessage('');
+                messageBox.className = 'text-center text-sm font-medium rounded-xl p-3 bg-green-100 text-green-700';
             }
-        });
+        };
 
-        // Function to fetch and display user data
-        async function fetchUserData(userId) {
-            loadingTransactionsEl.innerText = 'Loading transactions...';
-            userBalanceEl.innerText = '$...';
-            try {
-                const { data, error } = await supabase
-                    .from('users')
-                    .select('userBalance, transactions')
-                    .eq('id', userId)
-                    .single();
-
-                if (error) throw error;
-                
-                userBalanceEl.innerText = `$${data.userBalance.toFixed(2)}`;
-                renderTransactions(data.transactions);
-                loadingTransactionsEl.style.display = 'none';
-
-            } catch (error) {
-                console.error('Error fetching user data:', error.message);
-                userBalanceEl.innerText = '$ERROR';
-                loadingTransactionsEl.innerText = 'Error loading transactions.';
-            }
-        }
-        
-        // Function to render transactions
-        function renderTransactions(transactions) {
-            transactionListEl.innerHTML = '';
-            if (!transactions || transactions.length === 0) {
-                transactionListEl.innerHTML = '<p class="text-center text-gray-500">No transactions yet.</p>';
-                return;
-            }
-            transactions.forEach(tx => {
-                const txEl = document.createElement('div');
-                txEl.className = `p-4 rounded-lg ${tx.amount < 0 ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`;
-                txEl.innerHTML = `
-                    <p class="font-bold">${tx.type}</p>
-                    <p class="text-sm">Amount: $${tx.amount.toFixed(2)}</p>
-                    <p class="text-xs text-gray-500">To: ${tx.recipient || 'N/A'}</p>
-                    <p class="text-xs text-gray-500">Date: ${new Date(tx.timestamp).toLocaleString()}</p>
-                `;
-                transactionListEl.appendChild(txEl);
-            });
-        }
-        
-        // --- Event Listeners ---
-        loginBtn.addEventListener('click', async () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            if (!email || !password) {
-                displayAuthMessage('Please enter email and password.', true);
-                return;
-            }
-            displayAuthMessage('Logging in...');
-            try {
-                const { error } = await supabase.auth.signInWithPassword({ email, password });
-                if (error) throw error;
-                displayAuthMessage('Login successful!');
-            } catch (error) {
-                console.error("Login failed:", error);
-                displayAuthMessage(`Login failed: ${error.message}`, true);
-            }
-        });
-
-        signupBtn.addEventListener('click', async () => {
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            if (!email || !password) {
-                displayAuthMessage('Please enter email and password.', true);
-                return;
-            }
-            displayAuthMessage('Creating account...');
-            try {
-                const { error } = await supabase.auth.signUp({ email, password });
-                if (error) throw error;
-                displayAuthMessage('Account created and logged in!');
-            } catch (error) {
-                console.error("Sign up failed:", error);
-                displayAuthMessage(`Sign up failed: ${error.message}`, true);
-            }
-        });
-        
-        authLogoutBtn.addEventListener('click', async () => {
-            try {
-                await supabase.auth.signOut();
-            } catch (error) {
-                console.error("Logout failed:", error);
-            }
-        });
-        
-        bankingLogoutBtn.addEventListener('click', async () => {
-            try {
-                await supabase.auth.signOut();
-            } catch (error) {
-                console.error("Logout failed:", error);
-            }
-        });
-
-        transferForm.addEventListener('submit', async (e) => {
+        // Handle Sign Up
+        const signupForm = document.getElementById('auth-form');
+        signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            if (!currentSessionToken) {
-                displayTransferMessage('You must be logged in to make a transfer.', true);
-                return;
-            }
-
-            submitButton.disabled = true;
-            submitButton.innerText = 'Processing...';
-            transferStatusMessage.classList.add('hidden');
-
-            const recipient = document.getElementById('recipient').value;
-            const amount = parseFloat(document.getElementById('amount').value);
-            const verificationCode = document.getElementById('verificationCode').value;
-
-            // Vercel function URL provided by the user
-            const endpoint = 'https://banking-five-xi.vercel.app/api/transfer';
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Pass the Supabase session token for authentication
-                        'Authorization': `Bearer ${currentSessionToken}`
-                    },
-                    body: JSON.stringify({ userId: currentUserId, recipient, amount, verificationCode })
+                // Supabase's built-in sign-up function
+                const { data, error } = await supabase.auth.signUp({
+                    email: email,
+                    password: password
                 });
 
-                const result = await response.json();
-
-                if (response.ok) {
-                    displayTransferMessage(result.message, false);
-                    fetchUserData(currentUserId);
-                } else {
-                    throw new Error(result.message || 'Transfer failed. Please try again.');
+                if (error) {
+                    throw error;
                 }
+
+                showMessage('Sign up successful! Please check your email for a confirmation link.', false);
+                // Supabase handles the data creation automatically with the trigger
+                // We don't need to manually insert into the 'users' table here
+
             } catch (error) {
-                displayTransferMessage(error.message, true);
-            } finally {
-                submitButton.disabled = false;
-                submitButton.innerText = 'Initiate Transfer';
+                // This is where the 'Failed to fetch' error would be caught
+                let errorMessage = 'An unknown error occurred. Please try again.';
+                if (error.message) {
+                    errorMessage = error.message;
+                }
+                console.error(error);
+                showMessage(errorMessage, true);
+            }
+        });
+
+        // Handle Log In
+        const loginButton = document.getElementById('login-button');
+        loginButton.addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const { data, error } = await supabase.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+                if (error) {
+                    throw error;
+                }
+
+                showMessage('Log in successful!', false);
+                // You can redirect or perform other actions here
+
+            } catch (error) {
+                let errorMessage = 'An unknown error occurred. Please try again.';
+                if (error.message) {
+                    errorMessage = error.message;
+                }
+                console.error(error);
+                showMessage(errorMessage, true);
             }
         });
     </script>
 </body>
 </html>
-
