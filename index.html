@@ -3,124 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banc of California - Sign Up</title>
-    <!-- Tailwind CSS for styling -->
+    <title>Banc of California Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
         }
-        .container {
-            max-width: 420px;
-        }
-        .form-input:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
         }
     </style>
 </head>
-<body class="bg-gray-100 flex items-center justify-center min-h-screen">
-    <div class="container bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
-        <h1 class="text-3xl font-bold text-center text-gray-800 mb-6">Welcome</h1>
-        <p class="text-center text-gray-500 mb-8">Log in or create an account</p>
-        
-        <form id="auth-form" class="space-y-4">
-            <div>
-                <input type="email" id="email" class="form-input w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Email" required>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6 md:p-8 space-y-6">
+
+        <!-- User Profile and Balance Section -->
+        <div class="flex flex-col items-center justify-center space-y-4">
+            <!-- Picture Input and Display -->
+            <label for="profile-image" class="relative cursor-pointer">
+                <img id="profile-preview" src="https://placehold.co/100x100/A0AEC0/ffffff?text=Add+Photo" alt="Profile Picture" class="profile-picture rounded-full border-4 border-white shadow-md">
+                <input type="file" id="profile-image" class="hidden" accept="image/*">
+            </label>
+            <h1 class="text-3xl font-bold text-gray-800">Your Name Here</h1>
+            <div class="text-center">
+                <p class="text-xl font-medium text-gray-500">Current Balance</p>
+                <p class="text-4xl font-extrabold text-blue-600">$50,000,000,00</p>
             </div>
-            <div>
-                <input type="password" id="password" class="form-input w-full px-4 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Password" required>
+        </div>
+
+        <!-- Action Buttons Section -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Transfer Button -->
+            <button id="transfer-button" class="bg-blue-600 text-white font-semibold py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105">Transfer</button>
+            
+            <!-- Buy & Sell Bitcoin -->
+            <div class="grid grid-cols-2 gap-2">
+                <button class="bg-yellow-500 text-white font-semibold py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105">Buy BTC</button>
+                <button class="bg-red-500 text-white font-semibold py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105">Sell BTC</button>
             </div>
-            <div id="message-box" class="text-center text-sm font-medium rounded-xl p-3" style="display: none;"></div>
-            <div class="space-y-3 pt-2">
-                <button type="button" id="login-button" class="w-full bg-blue-500 text-white font-semibold py-2 rounded-xl hover:bg-blue-600 transition-colors duration-200">Log In</button>
-                <button type="submit" id="signup-button" class="w-full bg-green-500 text-white font-semibold py-2 rounded-xl hover:bg-green-600 transition-colors duration-200">Sign Up</button>
+        </div>
+
+        <!-- P2P and Bank Card Section -->
+        <div class="space-y-4">
+            <h2 class="text-xl font-semibold text-gray-700">Send to</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
+                    <img src="https://placehold.co/40x40/59C17E/ffffff?text=CA" alt="Cash App Icon" class="w-10 h-10 mb-2">
+                    <span class="text-sm font-medium">Cash App</span>
+                </button>
+                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
+                    <img src="https://placehold.co/40x40/003087/ffffff?text=P" alt="PayPal Icon" class="w-10 h-10 mb-2">
+                    <span class="text-sm font-medium">PayPal</span>
+                </button>
+                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
+                    <img src="https://placehold.co/40x40/3D95CE/ffffff?text=V" alt="Venmo Icon" class="w-10 h-10 mb-2">
+                    <span class="text-sm font-medium">Venmo</span>
+                </button>
+                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
+                    <img src="https://placehold.co/40x40/3E8172/ffffff?text=C" alt="Chime Icon" class="w-10 h-10 mb-2">
+                    <span class="text-sm font-medium">Chime</span>
+                </button>
             </div>
-        </form>
+        </div>
+
+        <!-- Bank Card Section -->
+        <div class="bg-gray-800 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
+            <div class="absolute top-4 right-4 text-gray-400">
+                <!-- SVG for a stylized credit card icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                </svg>
+            </div>
+            <div class="space-y-4">
+                <p class="text-sm font-semibold tracking-wider opacity-75">Banc of California</p>
+                <p class="text-2xl font-bold tracking-widest">**** **** **** 1234</p>
+                <div class="flex justify-between items-center text-xs">
+                    <div>
+                        <p class="opacity-75">CARD HOLDER</p>
+                        <p class="font-semibold">YOUR NAME</p>
+                    </div>
+                    <div>
+                        <p class="opacity-75">VALID THRU</p>
+                        <p class="font-semibold">12/26</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Box for Transactions -->
+        <div id="transaction-message" class="hidden text-center bg-red-100 text-red-700 py-3 rounded-xl font-medium">
+            Contact me to get your transaction done
+        </div>
+
     </div>
 
-    <!-- Supabase Client Library -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
-        // IMPORTANT: Replace with your actual Supabase project URL and Anon Key
-        const SUPABASE_URL = 'https://YOUR_PROJECT_ID.supabase.co';
-        const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
-        
-        const supabase = Supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Get the elements from the DOM
+        const transferButton = document.getElementById('transfer-button');
+        const transactionMessage = document.getElementById('transaction-message');
+        const profileImageInput = document.getElementById('profile-image');
+        const profileImagePreview = document.getElementById('profile-preview');
 
-        // Utility function to show messages to the user
-        const showMessage = (message, isError = false) => {
-            const messageBox = document.getElementById('message-box');
-            messageBox.textContent = message;
-            messageBox.style.display = 'block';
-            if (isError) {
-                messageBox.className = 'text-center text-sm font-medium rounded-xl p-3 bg-red-100 text-red-700';
-            } else {
-                messageBox.className = 'text-center text-sm font-medium rounded-xl p-3 bg-green-100 text-green-700';
-            }
-        };
-
-        // Handle Sign Up
-        const signupForm = document.getElementById('auth-form');
-        signupForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            try {
-                // Supabase's built-in sign-up function
-                const { data, error } = await supabase.auth.signUp({
-                    email: email,
-                    password: password
-                });
-
-                if (error) {
-                    throw error;
-                }
-
-                showMessage('Sign up successful! Please check your email for a confirmation link.', false);
-                // Supabase handles the data creation automatically with the trigger
-                // We don't need to manually insert into the 'users' table here
-
-            } catch (error) {
-                // This is where the 'Failed to fetch' error would be caught
-                let errorMessage = 'An unknown error occurred. Please try again.';
-                if (error.message) {
-                    errorMessage = error.message;
-                }
-                console.error(error);
-                showMessage(errorMessage, true);
-            }
+        // Add a click event listener to the "Transfer" button
+        transferButton.addEventListener('click', () => {
+            // Show the transaction message
+            transactionMessage.classList.remove('hidden');
         });
 
-        // Handle Log In
-        const loginButton = document.getElementById('login-button');
-        loginButton.addEventListener('click', async () => {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            
-            try {
-                const { data, error } = await supabase.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-
-                if (error) {
-                    throw error;
-                }
-
-                showMessage('Log in successful!', false);
-                // You can redirect or perform other actions here
-
-            } catch (error) {
-                let errorMessage = 'An unknown error occurred. Please try again.';
-                if (error.message) {
-                    errorMessage = error.message;
-                }
-                console.error(error);
-                showMessage(errorMessage, true);
+        // Add a change event listener to the file input
+        profileImageInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Create a FileReader to read the selected file
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Set the image source to the data URL of the file
+                    profileImagePreview.src = e.target.result;
+                };
+                // Read the file as a data URL
+                reader.readAsDataURL(file);
             }
         });
     </script>
