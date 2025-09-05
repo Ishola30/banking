@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banc of California - Dashboard</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 space-y-6">
+
+        <!-- Header with User Info -->
+        <header class="flex items-center justify-between mb-6">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
+                    <!-- Placeholder for user's picture -->
+                    <img src="https://placehold.co/100x100/A0A0A0/FFFFFF?text=PIC" alt="User Profile Picture" class="w-full h-full object-cover">
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-800">Banc of California</h1>
+                    <h3 class="text-lg text-gray-700">Welcome Back</h3>
+                    <h3 class="text-lg text-gray-700">Thomas Graizini</h3>
+                </div>
+            </div>
+            <a href="#" class="js-action-btn text-sm text-blue-600 hover:underline">Log Out</a>
+        </header>
+
+        <!-- Search and Action Bar -->
+        <div class="flex items-center space-x-4 p-4 rounded-xl bg-gray-50 shadow-sm">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            <input type="text" placeholder="How can we help?" class="flex-1 bg-transparent text-gray-700 placeholder-gray-400 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M16 11H8V9h8v2zM16 15H8v-2h8v2zM12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+            </svg>
+        </div>
+
+        <!-- Accounts Section -->
+        <section class="space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800">Accounts</h2>
+            
+            <!-- Checking Account Card -->
+            <a href="#" class="js-action-btn block bg-blue-600 text-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-lg font-semibold">Checking Account</span>
+                    <span class="text-sm">VIEW</span>
+                </div>
+                <p class="text-xs">Business Fundamentals Chk - 1135</p>
+                <p id="checking-balance" class="text-4xl font-bold mt-2">$50,000,000,.00</p>
+            </a>
+
+            <!-- Savings Account Card -->
+            <a href="#" class="js-action-btn block bg-indigo-600 text-white p-6 rounded-2xl shadow-lg">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-lg font-semibold">Savings Account</span>
+                    <span class="text-sm">VIEW</span>
+                </div>
+                <p class="text-xs">Personal Savings - 9876</p>
+                <p id="savings-balance" class="text-4xl font-bold mt-2">$50,000,000,000.00</p>
+            </a>
+            
+            <!-- Action Link -->
+            <div class="flex justify-center p-4">
+                <a href="#" class="js-action-btn text-blue-600 font-semibold hover:underline">OPEN NEW ACCOUNT</a>
+            </div>
+        </section>
+
+        <!-- Send & Deposit Section -->
+        <section class="space-y-4">
+            <h2 class="text-2xl font-bold text-gray-800">Quick Actions</h2>
+            <div class="grid grid-cols-3 gap-4 text-center">
+                <!-- Deposit Check -->
+                <a href="#" class="js-action-btn flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6m-4-4h8m-4 0v-4m0 8h4"/>
+                    </svg>
+                    <span class="text-xs mt-2">Deposit Check</span>
+                </a>
+                <!-- Zelle -->
+                <a href="#" class="js-action-btn flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 110-16 8 8 0 010 16zm-2-12v-2h-2v-2h2v2h2v2h2v2h-2v-2h-2v2z"/>
+                    </svg>
+                    <span class="text-xs mt-2">Zelle</span>
+                </a>
+                <!-- Cash App -->
+                <a href="#" class="js-action-btn flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-2.5 14h-2.5v-2h2.5v2zm5-4h-2.5v-2h2.5v2zM12 4c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.589-8-8-8z"/>
+                    </svg>
+                    <span class="text-xs mt-2">Cash App</span>
+                </a>
+                <!-- Venmo -->
+                <a href="#" class="js-action-btn flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M21 12c0 4.968-4.032 9-9 9s-9-4.032-9-9 4.032-9 9-9 9 4.032 9 9zM12 4a8 8 0 100 16 8 8 0 000-16z"/>
+                        <circle cx="12" cy="12" r="4"/>
+                        <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm0 2a2 2 0 110 4 2 2 0 010-4z"/>
+                    </svg>
+                    <span class="text-xs mt-2">Venmo</span>
+                </a>
+                <!-- Chime -->
+                <a href="#" class="js-action-btn flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-teal-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8 8 3.589 8 8-3.589 8-8 8z"/>
+                        <path d="M12 4c-4.411 0-8 3.589-8 8s3.589 8 8 8 8-3.589 8-8-3.589-8-8-8zm0 14a6 6 0 110-12 6 6 0 010 12z"/>
+                    </svg>
+                    <span class="text-xs mt-2">Chime</span>
+                </a>
+                <!-- PayPal -->
+                <a href="#" class="js-action-btn flex flex-col items-center justify-center p-4 rounded-xl bg-gray-50 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-indigo-700" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-3 14h-2.5v-2h2.5v2zm5-4h-2.5v-2h2.5v2z"/>
+                    </svg>
+                    <span class="text-xs mt-2">PayPal</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Cash Flow Monitor Section -->
+        <section class="space-y-4">
+            <a href="#" class="js-action-btn block p-6 rounded-2xl bg-gray-50 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-800">Cash Flow Monitor</h3>
+                <p class="text-sm text-gray-500 mt-1">Get a comprehensive look at your day-to-day business.</p>
+                <div class="flex justify-center mt-4">
+                    <span class="text-blue-600 font-semibold hover:underline">VIEW CASH FLOW</span>
+                </div>
+            </a>
+        </section>
+
+        <!-- Link Your Accounts Section -->
+        <section class="space-y-4">
+            <a href="#" class="js-action-btn block p-6 rounded-2xl bg-gray-50 shadow-sm">
+                <h3 class="text-lg font-semibold text-gray-800">Link Your Accounts</h3>
+                <p class="text-sm text-gray-500 mt-1">Access your Personal and Small Business accounts from this page.</p>
+                <div class="flex justify-center mt-4">
+                    <span class="text-blue-600 font-semibold hover:underline">CREATE LINK</span>
+                </div>
+            </a>
+        </section>
+    </div>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg px-2 pt-2 pb-safe-bottom">
+        <div class="flex justify-around items-center h-16">
+            <a href="#" class="js-action-btn flex flex-col items-center justify-center p-1 text-blue-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2L2 22h20L12 2zm0 15a4 4 0 100-8 4 4 0 000 8z"/>
+                </svg>
+                <span class="text-xs mt-1 font-semibold">Accounts</span>
+            </a>
+            <a href="#" class="js-action-btn flex flex-col items-center justify-center p-1 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m-3 9l-4-4m4 4h-4"/>
+                </svg>
+                <span class="text-xs mt-1">Transfer</span>
+            </a>
+            <a href="#" class="js-action-btn flex flex-col items-center justify-center p-1 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-2m-4-4l-4 4V8a4 4 0 014-4h4a4 4 0 014 4v4m-8-8h0"/>
+                </svg>
+                <span class="text-xs mt-1">Bill Pay</span>
+            </a>
+            <a href="#" class="js-action-btn flex flex-col items-center justify-center p-1 text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-3-3v6m-4-4h8m-4 0v-4m0 8h4"/>
+                </svg>
+                <span class="text-xs mt-1">Deposit</span>
+            </a>
+        </div>
+    </nav>
+    
+    <!-- Custom Message Box Modal -->
+    <div id="message-modal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-xl shadow-2xl p-6 max-w-sm w-full text-center space-y-4">
+            <div id="message-text" class="text-xl font-semibold text-gray-800"></div>
+            <button id="close-button" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition-colors">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkingBalanceEl = document.getElementById('checking-balance');
+            const savingsBalanceEl = document.getElementById('savings-balance');
+
+            const mockCheckingBalance = 672000000.77;
+            const mockSavingsBalance = 12500000.50;
+
+            checkingBalanceEl.textContent = `$${mockCheckingBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            savingsBalanceEl.textContent = `$${mockSavingsBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+            // Get the modal and its components
+            const messageModal = document.getElementById('message-modal');
+            const messageText = document.getElementById('message-text');
+            const closeButton = document.getElementById('close-button');
+
+            // Function to show the message
+            function showMessage(text) {
+                messageText.textContent = text;
+                messageModal.classList.remove('hidden');
+            }
+
+            // Function to hide the message
+            function hideMessage() {
+                messageModal.classList.add('hidden');
+            }
+
+            // Add click event listeners to all action buttons/links
+            const actionButtons = document.querySelectorAll('.js-action-btn');
+            actionButtons.forEach(button => {
+                button.addEventListener('click', (event) => {
+                    event.preventDefault(); // Prevent default link behavior
+                    showMessage('contact me to get autorize');
+                });
+            });
+
+            // Add click event listener to the close button
+            closeButton.addEventListener('click', hideMessage);
+
+            // Hide modal if the background is clicked
+            messageModal.addEventListener('click', (event) => {
+                if (event.target === messageModal) {
+                    hideMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
