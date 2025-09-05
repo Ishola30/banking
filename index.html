@@ -3,133 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banc of California Dashboard</title>
+    <title>Banc of California - Login</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
         body {
             font-family: 'Inter', sans-serif;
         }
-        .profile-picture {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
         }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
 
-    <div class="w-full max-w-lg bg-white rounded-2xl shadow-xl p-6 md:p-8 space-y-6">
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
 
-        <!-- User Profile and Balance Section -->
-        <div class="flex flex-col items-center justify-center space-y-4">
-            <!-- Picture Input and Display -->
-            <label for="profile-image" class="relative cursor-pointer">
-                <img id="profile-preview" src="https://placehold.co/100x100/A0AEC0/ffffff?text=Add+Photo" alt="Profile Picture" class="profile-picture rounded-full border-4 border-white shadow-md">
-                <input type="file" id="profile-image" class="hidden" accept="image/*">
-            </label>
-            <h1 class="text-3xl font-bold text-gray-800">Thomas Graizini</h1>
-            <div class="text-center">
-                <p class="text-xl font-medium text-gray-500">Current Balance</p>
-                <p class="text-4xl font-extrabold text-blue-600">$50,000,000,000,00</p>
-            </div>
+        <!-- Logo and Bank Name -->
+        <div class="flex items-center justify-center space-x-2 mb-4">
+            <!-- A simple SVG for the logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L2 22h20L12 2zm0 15a4 4 0 100-8 4 4 0 000 8z"/>
+            </svg>
+            <span class="text-xl font-bold text-gray-800">Banc of California</span>
         </div>
 
-        <!-- Action Buttons Section -->
-        <div class="grid grid-cols-2 gap-4">
-            <!-- Transfer Button -->
-            <button id="transfer-button" class="bg-blue-600 text-white font-semibold py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105">Transfer</button>
-            
-            <!-- Buy & Sell Bitcoin -->
-            <div class="grid grid-cols-2 gap-2">
-                <button class="bg-yellow-500 text-white font-semibold py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105">Buy BTC</button>
-                <button class="bg-red-500 text-white font-semibold py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105">Sell BTC</button>
-            </div>
-        </div>
+        <p class="text-center text-gray-500">Log in to your account</p>
+        <p id="message" class="text-center text-sm text-red-500"></p>
 
-        <!-- P2P and Bank Card Section -->
-        <div class="space-y-4">
-            <h2 class="text-xl font-semibold text-gray-700">Send to</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
-                    <img src="https://placehold.co/40x40/59C17E/ffffff?text=CA" alt="Cash App Icon" class="w-10 h-10 mb-2">
-                    <span class="text-sm font-medium">Cash App</span>
-                </button>
-                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
-                    <img src="https://placehold.co/40x40/003087/ffffff?text=P" alt="PayPal Icon" class="w-10 h-10 mb-2">
-                    <span class="text-sm font-medium">PayPal</span>
-                </button>
-                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
-                    <img src="https://placehold.co/40x40/3D95CE/ffffff?text=V" alt="Venmo Icon" class="w-10 h-10 mb-2">
-                    <span class="text-sm font-medium">Venmo</span>
-                </button>
-                <button class="flex flex-col items-center bg-gray-200 text-gray-700 p-4 rounded-xl shadow-md hover:bg-gray-300 transition-colors">
-                    <img src="https://placehold.co/40x40/3E8172/ffffff?text=C" alt="Chime Icon" class="w-10 h-10 mb-2">
-                    <span class="text-sm font-medium">Chime</span>
-                </button>
+        <form id="login-form" class="space-y-4">
+            <div>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" class="form-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Email" required>
             </div>
-        </div>
-
-        <!-- Bank Card Section -->
-        <div class="bg-gray-800 text-white rounded-2xl p-6 shadow-xl relative overflow-hidden">
-            <div class="absolute top-4 right-4 text-gray-400">
-                <!-- SVG for a stylized credit card icon -->
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="2" y="5" width="20" height="14" rx="2" ry="2"></rect>
-                    <line x1="2" y1="10" x2="22" y2="10"></line>
-                </svg>
+            <div>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" class="form-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Password" required>
             </div>
-            <div class="space-y-4">
-                <p class="text-sm font-semibold tracking-wider opacity-75">Banc of California</p>
-                <p class="text-2xl font-bold tracking-widest">**** **** **** 1234</p>
-                <div class="flex justify-between items-center text-xs">
-                    <div>
-                        <p class="opacity-75">CARD HOLDER</p>
-                        <p class="font-semibold">Thomas Graizini</p>
-                    </div>
-                    <div>
-                        <p class="opacity-75">VALID THRU</p>
-                        <p class="font-semibold">12/26</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Message Box for Transactions -->
-        <div id="transaction-message" class="hidden text-center bg-red-100 text-red-700 py-3 rounded-xl font-medium">
-            Contact me to get your transaction done
-        </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-md">
+                Log In
+            </button>
+        </form>
 
     </div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
     <script>
-        // Get the elements from the DOM
-        const transferButton = document.getElementById('transfer-button');
-        const transactionMessage = document.getElementById('transaction-message');
-        const profileImageInput = document.getElementById('profile-image');
-        const profileImagePreview = document.getElementById('profile-preview');
+        // Your web app's Firebase configuration
+        // Replace with your actual project settings
+        const firebaseConfig = {
+          apiKey: "AIzaSyBylHrXenLFYHzpCdwdWoSRdFq3bgpZNQY",
+          authDomain: "bank-2beae.firebaseapp.com",
+          projectId: "bank-2beae",
+          storageBucket: "bank-2beae.firebasestorage.app",
+          messagingSenderId: "936641895694",
+          appId: "1:936641895694:web:7be3ae01000351ef398b5f",
+          measurementId: "G-PY2SW63VLQ"
+        };
 
-        // Add a click event listener to the "Transfer" button
-        transferButton.addEventListener('click', () => {
-            // Show the transaction message
-            transactionMessage.classList.remove('hidden');
-        });
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-        // Add a change event listener to the file input
-        profileImageInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                // Create a FileReader to read the selected file
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Set the image source to the data URL of the file
-                    profileImagePreview.src = e.target.result;
-                };
-                // Read the file as a data URL
-                reader.readAsDataURL(file);
-            }
+        const auth = firebase.auth();
+        const loginForm = document.getElementById('login-form');
+        const messageEl = document.getElementById('message');
+
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = loginForm['email'].value;
+            const password = loginForm['password'].value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then((cred) => {
+                    messageEl.textContent = 'Login successful!';
+                    messageEl.classList.remove('text-red-500');
+                    messageEl.classList.add('text-green-500');
+                    // Redirect to the dashboard page here
+                    // window.location.href = "dashboard.html"; 
+                })
+                .catch(err => {
+                    messageEl.textContent = err.message;
+                    messageEl.classList.remove('text-green-500');
+                    messageEl.classList.add('text-red-500');
+                });
         });
     </script>
 </body>
 </html>
-
