@@ -1,223 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login & Sign Up</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Inter Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banc of California - Login</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl shadow-2xl p-8 max-w-sm w-full transition-all duration-300 transform scale-100">
-        <h1 id="form-title" class="text-3xl font-bold text-center text-gray-800 mb-6">Login</h1>
-        
-        <!-- Form for Login/Sign Up -->
-        <form id="auth-form" class="space-y-4">
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
-                <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
-            </div>
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 bg-gray-50 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 transition duration-150">
-            </div>
-            <button type="submit" id="submit-button" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150">
-                Log In
-            </button>
-        </form>
 
-        <!-- Toggle between Login and Sign Up -->
-        <div class="mt-6 text-center text-sm">
-            <p id="toggle-message" class="text-gray-600">Don't have an account? 
-                <button id="toggle-button" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none">Sign up</button>
-            </p>
-        </div>
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
 
-        <!-- Status/Error Message -->
-        <div id="message-container" class="mt-4 p-3 rounded-lg text-sm text-center font-medium" style="display: none;"></div>
+        <!-- Logo and Bank Name -->
+        <div class="flex items-center justify-center space-x-2 mb-4">
+            <img scr="logo.png">
+            <span class="text-xl font-bold text-gray-800">Banc of California</span>
+        </div>
 
-        <!-- Logged-in view -->
-        <div id="logged-in-container" class="mt-6 space-y-4" style="display: none;">
-            <div class="text-center">
-                <p class="text-lg font-bold text-gray-800">You are logged in!</p>
-                <p class="mt-2 text-sm text-gray-600">Your unique user ID is:</p>
-                <p id="user-id-display" class="mt-1 p-2 bg-gray-200 rounded-lg text-xs break-words font-mono text-gray-700 select-all"></p>
-            </div>
-            <button id="logout-button" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition duration-150">
-                Log Out
-            </button>
-        </div>
-    </div>
+        <p class="text-center text-gray-500">Log in to your account</p>
+        <p id="message" class="text-center text-sm text-red-500"></p>
 
-    <script type="module">
-        // Firebase imports
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { 
-            getAuth, 
-            signInWithEmailAndPassword, 
-            createUserWithEmailAndPassword,
-            signInWithCustomToken,
-            signInAnonymously,
-            onAuthStateChanged,
-            signOut,
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { 
-            getFirestore, 
-            doc, 
-            setDoc,
-        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        <form id="login-form" class="space-y-4" action="Dashboard.html>
+            <div>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" class="form-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Email" required>
+            </div>
+            <div>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" class="form-input w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 transition-colors duration-200" placeholder="Password" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 shadow-md">
+                Log In
+            </button>
+        </form>
 
-        // Set Firebase debug log level
-        setLogLevel('debug');
+    </div>
 
-        // Global variables provided by the environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script>
+        // Your web app's Firebase configuration
+        // Replace with your actual project settings
+        const firebaseConfig = {
+          apiKey: "AIzaSyBylHrXenLFYHzpCdwdWoSRdFq3bgpZNQY",
+          authDomain: "bank-2beae.firebaseapp.com",
+          projectId: "bank-2beae",
+          storageBucket: "bank-2beae.firebasestorage.app",
+          messagingSenderId: "936641895694",
+          appId: "1:936641895694:web:7be3ae01000351ef398b5f",
+          measurementId: "G-PY2SW63VLQ"
+        };
 
-        let db, auth;
-        let isSignUpMode = false;
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-        // UI elements
-        const authForm = document.getElementById('auth-form');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const submitButton = document.getElementById('submit-button');
-        const formTitle = document.getElementById('form-title');
-        const toggleButton = document.getElementById('toggle-button');
-        const toggleMessage = document.getElementById('toggle-message');
-        const messageContainer = document.getElementById('message-container');
-        const loggedInContainer = document.getElementById('logged-in-container');
-        const logoutButton = document.getElementById('logout-button');
-        const userIdDisplay = document.getElementById('user-id-display');
+        const auth = firebase.auth();
+        const loginForm = document.getElementById('login-form');
+        const messageEl = document.getElementById('message');
 
-        // Function to show a temporary message
-        const showMessage = (message, isError = false) => {
-            messageContainer.textContent = message;
-            messageContainer.style.display = 'block';
-            if (isError) {
-                messageContainer.className = 'mt-4 p-3 rounded-lg text-sm text-center font-medium bg-red-100 text-red-700';
-            } else {
-                messageContainer.className = 'mt-4 p-3 rounded-lg text-sm text-center font-medium bg-green-100 text-green-700';
-            }
-            setTimeout(() => {
-                messageContainer.style.display = 'none';
-            }, 5000);
-        };
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = loginForm['email'].value;
+            const password = loginForm['password'].value;
 
-        // Initialize Firebase and set up authentication state listener
-        const initializeFirebase = async () => {
-            try {
-                const app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-
-                // Authenticate with custom token or anonymously
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (error) {
-                console.error("Firebase initialization or authentication failed:", error);
-                showMessage(`Initialization failed: ${error.message}`, true);
-            }
-        };
-
-        // Handle form submission
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = emailInput.value;
-            const password = passwordInput.value;
-            
-            if (!email || !password) {
-                showMessage("Please enter both email and password.", true);
-                return;
-            }
-
-            try {
-                if (isSignUpMode) {
-                    // Sign Up a new user
-                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                    await setDoc(doc(db, `/artifacts/${appId}/users/${userCredential.user.uid}/profile/info`), { email: userCredential.user.email });
-                    showMessage("Sign up successful! You are now logged in.");
-                } else {
-                    // Log In an existing user
-                    await signInWithEmailAndPassword(auth, email, password);
-                    showMessage("Login successful!");
-                }
-            } catch (error) {
-                console.error("Authentication error:", error);
-                showMessage(`Authentication failed: ${error.message}`, true);
-            }
-        });
-
-        // Toggle between Login and Sign Up views
-        toggleButton.addEventListener('click', () => {
-            isSignUpMode = !isSignUpMode;
-            if (isSignUpMode) {
-                formTitle.textContent = 'Sign Up';
-                submitButton.textContent = 'Sign Up';
-                toggleMessage.innerHTML = 'Already have an account? <button id="toggle-button" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none">Log In</button>';
-            } else {
-                formTitle.textContent = 'Login';
-                submitButton.textContent = 'Log In';
-                toggleMessage.innerHTML = "Don't have an account? <button id="toggle-button" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none">Sign up</button>";
-            }
-            // Re-attach event listener to the new toggle button
-            document.getElementById('toggle-button').addEventListener('click', () => {
-                isSignUpMode = !isSignUpMode;
-                if (isSignUpMode) {
-                    formTitle.textContent = 'Sign Up';
-                    submitButton.textContent = 'Sign Up';
-                    toggleMessage.innerHTML = 'Already have an account? <button id="toggle-button" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none">Log In</button>';
-                } else {
-                    formTitle.textContent = 'Login';
-                    submitButton.textContent = 'Log In';
-                    toggleMessage.innerHTML = "Don't have an account? <button id="toggle-button" class="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none">Sign up</button>";
-                }
-            });
-        });
-
-        // Handle logout
-        logoutButton.addEventListener('click', async () => {
-            try {
-                await signOut(auth);
-                showMessage("Logged out successfully.");
-            } catch (error) {
-                console.error("Logout error:", error);
-                showMessage(`Logout failed: ${error.message}`, true);
-            }
-        });
-
-        // Listen for authentication state changes
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                // User is signed in
-                authForm.style.display = 'none';
-                toggleMessage.style.display = 'none';
-                loggedInContainer.style.display = 'block';
-                userIdDisplay.textContent = user.uid;
-            } else {
-                // User is signed out
-                authForm.style.display = 'block';
-                toggleMessage.style.display = 'block';
-                loggedInContainer.style.display = 'none';
-                userIdDisplay.textContent = '';
-            }
-        });
-
-        // Initialize on window load
-        window.onload = initializeFirebase;
-    </script>
+            auth.signInWithEmailAndPassword(email, password)
+                .then((cred) => {
+                    messageEl.textContent = 'Login successful!';
+                    messageEl.classList.remove('text-red-500');
+                    messageEl.classList.add('text-green-500');
+                    // Redirect to the dashboard page here
+                    // window.location.href = "dashboard.html"; 
+                })
+                .catch(err => {
+                    messageEl.textContent = err.message;
+                    messageEl.classList.remove('text-green-500');
+                    messageEl.classList.add('text-red-500');
+                });
+        });
+    </script>
 </body>
 </html>
