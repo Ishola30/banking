@@ -1,1 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banc of California - Login</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .form-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.4);
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-xl p-8 space-y-6">
+
+        <!-- Logo and Bank Name -->
+        <div class="flex flex-col items-center space-y-4 mb-8">
+            <img src="logo.png" alt="Banc of California Logo" class="w-24 h-24 object-contain rounded-lg shadow-md">
+            <h1 class="text-3xl font-extrabold text-blue-900">Banc of California</h1>
+        </div>
+
+        <p class="text-center text-gray-600 font-medium">Log in to your account</p>
+        <p id="message" class="text-center text-sm font-semibold text-red-600 min-h-[1.25rem]"></p>
+
+        <!-- Login Form -->
+        <form id="login-form" class="space-y-4">
+            <div>
+                <label for="email" class="sr-only">Email</label>
+                <input type="email" id="email" name="email" class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-xl transition-all duration-200" placeholder="Email" required>
+            </div>
+            <div>
+                <label for="password" class="sr-only">Password</label>
+                <input type="password" id="password" name="password" class="form-input w-full px-4 py-3 border-2 border-gray-300 rounded-xl transition-all duration-200" placeholder="Password" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-700 text-white font-bold text-lg py-3 rounded-xl hover:bg-blue-800 transition-colors duration-200 shadow-md transform hover:scale-105">
+                Log In
+            </button>
+        </form>
+
+        <p class="text-center text-gray-500 text-sm">
+            Don't have an account? <a href="#" class="text-blue-600 font-semibold hover:underline">Create an Account</a>
+        </p>
+
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Firebase imports using modular SDK v11.6.1
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Global variables provided by the environment
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let app;
+        let auth;
+        let db;
+
+        // Function to show a message to the user
+        function showMessage(text, isError = true) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = text;
+            messageEl.classList.toggle('text-red-600', isError);
+            messageEl.classList.toggle('text-green-600', !isError);
+        }
+
+        // This function attempts to sign in the user using the provided token.
+        // If the token is not available, it signs in anonymously.
+        async function authenticateUser() {
+            try {
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (error) {
+                console.error("Authentication failed:", error);
+                showMessage("Authentication failed. Please try again later.", true);
+            }
+        }
+
+        // Initialize Firebase and set up authentication state listener
+        function initializeAppAndAuth() {
+            if (!firebaseConfig) {
+                showMessage("Firebase configuration is missing.", true);
+                console.error("Firebase config is missing.");
+                return;
+            }
+
+            try {
+                app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
+                setLogLevel('debug'); // Enable debug logging for Firestore
+
+                // Listen for authentication state changes
+                // This is the most reliable way to handle redirects after login.
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        console.log("User authenticated:", user.uid);
+                        showMessage('Login successful! Redirecting...', false);
+                        // Redirect to the dashboard page after successful login
+                        window.location.href = "dashboard.html";
+                    } else {
+                        console.log("No user is signed in.");
+                    }
+                });
+
+                // Get the login form and add event listener
+                const loginForm = document.getElementById('login-form');
+                loginForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const email = loginForm['email'].value;
+                    const password = loginForm['password'].value;
+                    showMessage('Logging in...', false);
+                    try {
+                        await signInWithEmailAndPassword(auth, email, password);
+                        // The onAuthStateChanged listener will handle the redirect
+                    } catch (error) {
+                        console.error("Login failed:", error);
+                        showMessage(error.message, true);
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                showMessage("Failed to initialize the application.", true);
+            }
+        }
+
+        window.onload = initializeAppAndAuth;
+
+    </script>
+</body>
+</html>
+
 
