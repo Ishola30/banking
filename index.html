@@ -25,7 +25,8 @@
 
         <!-- Logo and Bank Name -->
         <div class="flex flex-col items-center space-y-4 mb-8">
-            <img src="logo.png" alt="Banc of California Logo" class="w-24 h-24 object-contain rounded-lg shadow-md">
+            <!-- Using a placeholder image. You can replace the src attribute with your logo URL. -->
+            <img src="https://placehold.co/100x100/1E3A8A/FFFFFF?text=Logo" alt="Banc of California Logo" class="w-24 h-24 object-contain rounded-lg shadow-md">
             <h1 class="text-3xl font-extrabold text-blue-900">Banc of California</h1>
         </div>
 
@@ -57,17 +58,18 @@
     <script type="module">
         // Firebase imports using modular SDK v11.6.1
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        // Global variables provided by the environment
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : null;
-        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        let app;
-        let auth;
-        let db;
+        import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        
+        // YOUR FIREBASE CONFIGURATION
+        const firebaseConfig = {
+          apiKey: "AIzaSyBylHrXenLFYHzpCdwdWoSRdFq3bgpZNQY",
+          authDomain: "bank-2beae.firebaseapp.com",
+          projectId: "bank-2beae",
+          storageBucket: "bank-2beae.firebasestorage.app",
+          messagingSenderId: "936641895694",
+          appId: "1:936641895694:web:7be3ae01000351ef398b5f",
+          measurementId: "G-PY2SW63VLQ"
+        };
 
         // Function to show a message to the user
         function showMessage(text, isError = true) {
@@ -77,73 +79,49 @@
             messageEl.classList.toggle('text-green-600', !isError);
         }
 
-        // This function attempts to sign in the user using the provided token.
-        // If the token is not available, it signs in anonymously.
-        async function authenticateUser() {
-            try {
-                if (initialAuthToken) {
-                    await signInWithCustomToken(auth, initialAuthToken);
+        try {
+            // Initialize Firebase App and Auth service
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+
+            // Listen for authentication state changes and redirect on successful login
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    console.log("User authenticated:", user.uid);
+                    showMessage('Login successful! Redirecting...', false);
+                    // Redirect to the dashboard page after successful login
+                    window.location.href = "dashboard.html";
                 } else {
-                    await signInAnonymously(auth);
+                    console.log("No user is signed in.");
                 }
-            } catch (error) {
-                console.error("Authentication failed:", error);
-                showMessage("Authentication failed. Please try again later.", true);
-            }
-        }
+            });
 
-        // Initialize Firebase and set up authentication state listener
-        function initializeAppAndAuth() {
-            if (!firebaseConfig) {
-                showMessage("Firebase configuration is missing.", true);
-                console.error("Firebase config is missing.");
-                return;
-            }
-
-            try {
-                app = initializeApp(firebaseConfig);
-                auth = getAuth(app);
-                db = getFirestore(app);
-                setLogLevel('debug'); // Enable debug logging for Firestore
-
-                // Listen for authentication state changes
-                // This is the most reliable way to handle redirects after login.
-                onAuthStateChanged(auth, async (user) => {
-                    if (user) {
-                        console.log("User authenticated:", user.uid);
-                        showMessage('Login successful! Redirecting...', false);
-                        // Redirect to the dashboard page after successful login
-                        window.location.href = "dashboard.html";
+            // Get the login form and add event listener
+            const loginForm = document.getElementById('login-form');
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = loginForm['email'].value;
+                const password = loginForm['password'].value;
+                showMessage('Logging in...', false);
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    // The onAuthStateChanged listener will handle the redirect
+                } catch (error) {
+                    console.error("Login failed:", error);
+                    // Display a user-friendly message for common errors
+                    if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found') {
+                        showMessage('Invalid email or password.', true);
                     } else {
-                        console.log("No user is signed in.");
-                    }
-                });
-
-                // Get the login form and add event listener
-                const loginForm = document.getElementById('login-form');
-                loginForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const email = loginForm['email'].value;
-                    const password = loginForm['password'].value;
-                    showMessage('Logging in...', false);
-                    try {
-                        await signInWithEmailAndPassword(auth, email, password);
-                        // The onAuthStateChanged listener will handle the redirect
-                    } catch (error) {
-                        console.error("Login failed:", error);
                         showMessage(error.message, true);
                     }
-                });
-            } catch (error) {
-                console.error("Firebase initialization failed:", error);
-                showMessage("Failed to initialize the application.", true);
-            }
+                }
+            });
+        } catch (error) {
+            console.error("Firebase initialization failed:", error);
+            // This is likely due to an invalid firebaseConfig object
+            showMessage("Failed to initialize Firebase. Please check your configuration.", true);
         }
-
-        window.onload = initializeAppAndAuth;
 
     </script>
 </body>
 </html>
-
-
