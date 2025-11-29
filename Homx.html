@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Crypto Vault Dashboard</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+    }
+    body {
+        background: #eef2f5;
+        padding: 20px;
+    }
+
+    .container {
+        max-width: 480px;
+        margin: auto;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .header h2 {
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    .header p {
+        margin-top: 5px;
+        color: #666;
+    }
+
+    .card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+    }
+
+    .balance {
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .sub-balance {
+        margin-top: 3px;
+        color: #555;
+    }
+
+    .btn-group {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .btn {
+        width: 32%;
+        background: #f4f5f7;
+        padding: 12px;
+        text-align: center;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .btn:hover {
+        background: #dfe3e8;
+    }
+
+    .assets-table {
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .asset-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 5px;
+        border-bottom: 1px solid #eee;
+        cursor: pointer;
+    }
+
+    .asset-row:hover {
+        background: #f8f9fb;
+    }
+
+    .asset-name {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .coin-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+    }
+
+    /* SEND FORM */
+    #send-section {
+        display: none;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .submit-btn {
+        width: 100%;
+        margin-top: 10px;
+        padding: 14px;
+        background: black;
+        color: #fff;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h2 id="userName">Thomas Graziani</h2>
+        <p>Elite Crypto Vault</p>
+    </div>
+
+    <!-- BALANCE CARD -->
+    <div class="card">
+        <div class="balance" id="totalBalance">1,800,000 BTC</div>
+        <div class="sub-balance" id="usdValue">$87,352,709,000.00</div>
+
+        <div class="btn-group">
+            <div class="btn" onclick="openSend()">Send</div>
+            <div class="btn">Receive</div>
+            <div class="btn">Activity</div>
+        </div>
+    </div>
+
+    <!-- ASSETS -->
+    <div class="card">
+        <h3>Assets</h3>
+
+        <div class="assets-table">
+
+            <div class="asset-row" onclick="openCoin('BTC')">
+                <div class="asset-name">
+                    <img src="https://cryptoicons.org/api/icon/btc/50" class="coin-icon">
+                    BTC
+                </div>
+                <div>1,800,000</div>
+                <div>$87,352,709,000</div>
+            </div>
+
+            <div class="asset-row" onclick="openCoin('ETH')">
+                <div class="asset-name">
+                    <img src="https://cryptoicons.org/api/icon/eth/50" class="coin-icon">
+                    ETH
+                </div>
+                <div>500</div>
+                <div>$1,500,000</div>
+            </div>
+
+            <div class="asset-row" onclick="openCoin('USDT')">
+                <div class="asset-name">
+                    <img src="https://cryptoicons.org/api/icon/usdt/50" class="coin-icon">
+                    USDT
+                </div>
+                <div>50,000</div>
+                <div>$50,000</div>
+            </div>
+
+            <div class="asset-row" onclick="openCoin('BNB')">
+                <div class="asset-name">
+                    <img src="https://cryptoicons.org/api/icon/bnb/50" class="coin-icon">
+                    BNB
+                </div>
+                <div>2,000</div>
+                <div>$520,000</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SEND SECTION -->
+    <div class="card" id="send-section">
+        <h3>Send Crypto</h3>
+
+        <div class="form-group">
+            <label>Wallet Address</label>
+            <input type="text" id="walletInput" placeholder="Enter wallet address">
+        </div>
+
+        <div class="form-group">
+            <label>Amount</label>
+            <input type="number" id="amountInput" placeholder="Enter amount">
+        </div>
+
+        <div class="form-group">
+            <label>Select Coin</label>
+            <select id="coinSelect">
+                <option>BTC</option>
+                <option>ETH</option>
+                <option>USDT</option>
+                <option>BNB</option>
+            </select>
+        </div>
+
+        <button class="submit-btn" onclick="submitSend()">Send Now</button>
+    </div>
+
+</div>
+
+<script>
+function openSend() {
+    document.getElementById("send-section").style.display = "block";
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+function openCoin(coin) {
+    alert("You clicked on " + coin + " details.");
+}
+
+function submitSend() {
+    let wallet = document.getElementById("walletInput").value;
+    let amount = document.getElementById("amountInput").value;
+    let coin = document.getElementById("coinSelect").value;
+
+    if (!wallet || !amount) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    alert("Sending " + amount + " " + coin + " to " + wallet);
+}
+</script>
+
+</body>
+</html>
