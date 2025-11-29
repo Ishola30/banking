@@ -1,259 +1,334 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Crypto Vault Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joint Investment Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* CSS STYLES */
+        :root {
+            --primary-color: #00bcd4; /* Cyan/Aqua accent */
+            --background-dark: #121212; /* Very dark background */
+            --card-background: #1e1e1e;
+            --text-light: #e0e0e0;
+            --text-muted: #888;
+            --positive: #4caf50; /* Green for gains */
+        }
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Inter", sans-serif;
-    }
-    body {
-        background: #eef2f5;
-        padding: 20px;
-    }
+        /* Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .container {
-        max-width: 480px;
-        margin: auto;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+        }
 
-    .header {
-        text-align: center;
-        margin-bottom: 25px;
-    }
+        /* Dashboard Layout */
+        .dashboard-container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+            min-height: 100vh;
+        }
 
-    .header h2 {
-        font-size: 22px;
-        font-weight: 600;
-    }
+        /* Header Styling */
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--card-background);
+        }
 
-    .header p {
-        margin-top: 5px;
-        color: #666;
-    }
+        .logo {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 10px;
+            border: 2px solid var(--primary-color);
+            margin-right: 15px;
+        }
 
-    .card {
-        background: #fff;
-        padding: 20px;
-        border-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-        margin-bottom: 20px;
-    }
+        .user-info h1 {
+            font-size: 1.5em;
+            letter-spacing: 2px;
+            margin: 0;
+        }
 
-    .balance {
-        font-size: 28px;
-        font-weight: bold;
-    }
+        .user-info h2 {
+            font-size: 1.1em;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            margin: 0;
+        }
 
-    .sub-balance {
-        margin-top: 3px;
-        color: #555;
-    }
+        .menu-icon {
+            margin-left: auto;
+            font-size: 1.5em;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
 
-    .btn-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
+        /* Main Content Layout */
+        .dashboard-main {
+            padding: 30px 0;
+        }
 
-    .btn {
-        width: 32%;
-        background: #f4f5f7;
-        padding: 12px;
-        text-align: center;
-        border-radius: 12px;
-        cursor: pointer;
-        font-weight: 500;
-        transition: 0.3s;
-    }
+        /* Card General Style */
+        .balance-card, .chart-card, .data-card {
+            background-color: var(--card-background);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+            margin-bottom: 20px;
+        }
 
-    .btn:hover {
-        background: #dfe3e8;
-    }
+        .balance-card:hover, .chart-card:hover, .data-card:hover {
+            transform: translateY(-3px);
+        }
 
-    .assets-table {
-        width: 100%;
-        margin-top: 15px;
-    }
+        .card-label {
+            text-transform: uppercase;
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
 
-    .asset-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 5px;
-        border-bottom: 1px solid #eee;
-        cursor: pointer;
-    }
+        .card-title {
+            font-size: 1.2em;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 10px;
+        }
 
-    .asset-row:hover {
-        background: #f8f9fb;
-    }
+        /* Balance Section */
+        .balance-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Total Assets takes more space */
+            gap: 20px;
+        }
 
-    .asset-name {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .total-assets {
+            background-color: var(--primary-color); /* Highlight for main balance */
+            color: var(--background-dark);
+        }
 
-    .coin-icon {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-    }
+        .total-assets .card-label {
+            color: var(--background-dark);
+        }
 
-    /* SEND FORM */
-    #send-section {
-        display: none;
-    }
+        .asset-value {
+            font-size: 2.8em;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
 
-    .form-group {
-        margin-bottom: 15px;
-    }
+        .balance-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    input, select {
-        width: 100%;
-        padding: 12px;
-        border-radius: 10px;
-        border: 1px solid #ccc;
-    }
+        .asset-value-small {
+            font-size: 1.6em;
+            font-weight: 600;
+            color: var(--positive); /* Highlighting the balance */
+        }
 
-    .submit-btn {
-        width: 100%;
-        margin-top: 10px;
-        padding: 14px;
-        background: black;
-        color: #fff;
-        border-radius: 12px;
-        cursor: pointer;
-        font-size: 16px;
-    }
+        /* Performance and Data Sections (using CSS Grid for main areas) */
+        .performance-section, .data-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
 
-</style>
+        .chart-placeholder {
+            height: 250px;
+            background: linear-gradient(135deg, rgba(0, 188, 212, 0.1), rgba(0, 188, 212, 0.05));
+            border: 1px dashed var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 0.9em;
+            border-radius: 4px;
+        }
+
+        .table-placeholder p {
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95em;
+        }
+
+        /* Footer Styling */
+        .dashboard-footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid var(--card-background);
+            margin-top: 20px;
+            font-size: 1.1em;
+            color: var(--text-light);
+            background-color: #1a1a1a;
+            border-radius: 4px;
+        }
+
+        .dashboard-footer p {
+            font-weight: 500;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .balance-section {
+                grid-template-columns: 1fr;
+            }
+            .balance-grid {
+                flex-direction: row; /* Stack side-by-side on tablet */
+            }
+            .performance-section, .data-section {
+                grid-template-columns: 1fr; /* Stack all columns on tablet/mobile */
+            }
+            .asset-value {
+                font-size: 2.2em;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .dashboard-container {
+                padding: 10px;
+            }
+            .balance-grid {
+                flex-direction: column; /* Stack vertically on mobile */
+            }
+            .user-info h1 {
+                font-size: 1.2em;
+            }
+            .user-info h2 {
+                font-size: 0.9em;
+            }
+            .asset-value {
+                font-size: 1.8em;
+            }
+            .asset-value-small {
+                font-size: 1.3em;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="logo">TG</div>
+            <div class="user-info">
+                <h1>THOMAS GRAZIANI</h1>
+                <h2>LARRISSA GRAZIANI</h2>
+            </div>
+            <div class="menu-icon"><i class="fas fa-bars"></i></div>
+        </header>
 
-<div class="container">
+        <main class="dashboard-main">
+            
+            <section class="balance-section">
+                <div class="balance-card total-assets">
+                    <p class="card-label">TOTAL JOINT ASSETS</p>
+                    <p class="asset-value" id="total-balance">$87,550,970,300.00</p>
+                </div>
 
-    <!-- HEADER -->
-    <div class="header">
-        <h2 id="userName">Thomas Graziani</h2>
-        <p>Elite Crypto Vault</p>
+                <div class="balance-grid">
+                    <div class="balance-card current-balance">
+                        <p class="card-label">CURRENT BALANCE</p>
+                        <p class="asset-value-small">$43,775,485,150.00</p>
+                    </div>
+                    <div class="balance-card crypto-balance">
+                        <p class="card-label">CRYPTO BALANCE</p>
+                        <p class="asset-value-small">$43,775,485,150.00</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="performance-section">
+                <div class="chart-card">
+                    <h3 class="card-title">THOMAS PORTFOLIO PERFORMANCE</h3>
+                    <div class="chart-placeholder">Chart Placeholder (Connect Chart.js here)</div>
+                </div>
+                <div class="chart-card">
+                    <h3 class="card-title">LARRISSA PORTFOLIO PERFORMANCE</h3>
+                    <div class="chart-placeholder">Chart Placeholder (Connect Chart.js here)</div>
+                </div>
+            </section>
+
+            <section class="data-section">
+                <div class="data-card recent-transactions">
+                    <h3 class="card-title">RECENT TRANSACTIONS</h3>
+                    <div class="table-placeholder">
+                        <p class="placeholder-item">AAPL Buy: +$12,000</p>
+                        <p class="placeholder-item">TSLA Sell: -$5,000</p>
+                        <p class="placeholder-item">AMZN Buy: +$8,500</p>
+                    </div>
+                </div>
+                <div class="data-card top-holdings">
+                    <h3 class="card-title">TOP HOLDINGS</h3>
+                    <div class="table-placeholder">
+                        <p class="placeholder-item">NVIDIA (NVDA): 15.2%</p>
+                        <p class="placeholder-item">Google (GOOGL): 12.8%</p>
+                        <p class="placeholder-item">Bitcoin (BTC): 10.1%</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="dashboard-footer">
+            <p>
+                Thomas and Larrissa Graziani joint investment account 
+SCHEDULE:ATM ON INSPECTION 
+INSPECTION FEE:$1330 
+PAYMENT DUE:11/12/2025
+            </p>
+        </footer>
     </div>
 
-    <!-- BALANCE CARD -->
-    <div class="card">
-        <div class="balance" id="totalBalance">1,800,000 BTC</div>
-        <div class="sub-balance" id="usdValue">$87,352,709,000.00</div>
+    <script>
+        // JAVASCRIPT
+        document.addEventListener('DOMContentLoaded', () => {
+            const totalBalanceElement = document.getElementById('total-balance');
 
-        <div class="btn-group">
-            <div class="btn" onclick="openSend()">Send</div>
-            <div class="btn">Receive</div>
-            <div class="btn">Activity</div>
-        </div>
-    </div>
+            // Function to format the currency (to ensure consistency and remove extra commas if needed)
+            const formatCurrency = (value) => {
+                // Remove non-numeric characters except the decimal point and initial dollar sign
+                const number = parseFloat(value.replace(/[$,]/g, ''));
+                
+                if (isNaN(number)) return value;
 
-    <!-- ASSETS -->
-    <div class="card">
-        <h3>Assets</h3>
+                // Use Intl.NumberFormat for professional currency formatting
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                }).format(number);
+            };
 
-        <div class="assets-table">
-
-            <div class="asset-row" onclick="openCoin('BTC')">
-                <div class="asset-name">
-                    <img src="https://cryptoicons.org/api/icon/btc/50" class="coin-icon">
-                    BTC
-                </div>
-                <div>1,800,000</div>
-                <div>$87,352,709,000</div>
-            </div>
-
-            <div class="asset-row" onclick="openCoin('ETH')">
-                <div class="asset-name">
-                    <img src="https://cryptoicons.org/api/icon/eth/50" class="coin-icon">
-                    ETH
-                </div>
-                <div>500</div>
-                <div>$1,500,000</div>
-            </div>
-
-            <div class="asset-row" onclick="openCoin('USDT')">
-                <div class="asset-name">
-                    <img src="https://cryptoicons.org/api/icon/usdt/50" class="coin-icon">
-                    USDT
-                </div>
-                <div>50,000</div>
-                <div>$50,000</div>
-            </div>
-
-            <div class="asset-row" onclick="openCoin('BNB')">
-                <div class="asset-name">
-                    <img src="https://cryptoicons.org/api/icon/bnb/50" class="coin-icon">
-                    BNB
-                </div>
-                <div>2,000</div>
-                <div>$520,000</div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- SEND SECTION -->
-    <div class="card" id="send-section">
-        <h3>Send Crypto</h3>
-
-        <div class="form-group">
-            <label>Wallet Address</label>
-            <input type="text" id="walletInput" placeholder="Enter wallet address">
-        </div>
-
-        <div class="form-group">
-            <label>Amount</label>
-            <input type="number" id="amountInput" placeholder="Enter amount">
-        </div>
-
-        <div class="form-group">
-            <label>Select Coin</label>
-            <select id="coinSelect">
-                <option>BTC</option>
-                <option>ETH</option>
-                <option>USDT</option>
-                <option>BNB</option>
-            </select>
-        </div>
-
-        <button class="submit-btn" onclick="submitSend()">Send Now</button>
-    </div>
-
-</div>
-
-<script>
-function openSend() {
-    document.getElementById("send-section").style.display = "block";
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-function openCoin(coin) {
-    alert("You clicked on " + coin + " details.");
-}
-
-function submitSend() {
-    let wallet = document.getElementById("walletInput").value;
-    let amount = document.getElementById("amountInput").value;
-    let coin = document.getElementById("coinSelect").value;
-
-    if (!wallet || !amount) {
-        alert("Please fill all fields.");
-        return;
-    }
-
-    alert("Sending " + amount + " " + coin + " to " + wallet);
-}
-</script>
-
+            // Apply formatting to the main balance on load
+            if (totalBalanceElement) {
+                totalBalanceElement.textContent = formatCurrency(totalBalanceElement.textContent);
+            }
+        });
+    </script>
 </body>
 </html>
+
+
+                           
