@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,207 +5,397 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Elon musk investment program</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, Helvetica, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#0b1220;
-    color:white;
-    padding:30px;
+background:#08111f;
+color:#fff;
 }
 
-.container{
-    max-width:1100px;
-    margin:auto;
+.wrapper{
+display:flex;
+min-height:100vh;
 }
 
-.header{
-    background:linear-gradient(135deg,#1e3a8a,#0f172a);
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 10px 25px rgba(0,0,0,.3);
+.sidebar{
+width:260px;
+background:#0f172a;
+padding:20px;
+position:fixed;
+height:100%;
+left:0;
+top:0;
+transition:.3s;
+z-index:1000;
 }
 
-.header h1{
-    font-size:32px;
+.logo{
+font-size:24px;
+font-weight:700;
+margin-bottom:30px;
+color:#22c55e;
 }
 
-.header p{
-    margin-top:10px;
-    color:#d1d5db;
+.sidebar ul{
+list-style:none;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-    gap:20px;
-    margin-top:25px;
+.sidebar ul li{
+margin:10px 0;
+}
+
+.sidebar ul li a{
+display:block;
+padding:14px;
+text-decoration:none;
+color:white;
+border-radius:10px;
+transition:.3s;
+}
+
+.sidebar ul li a:hover{
+background:#1e293b;
+}
+
+.main{
+margin-left:260px;
+flex:1;
+padding:20px;
+}
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.menu-btn{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
+
+.profile{
+background:#0f172a;
+padding:10px 15px;
+border-radius:10px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
 }
 
 .card{
-    background:#111827;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,.2);
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.2);
 }
 
-.card h3{
-    color:#9ca3af;
-    font-size:15px;
-    margin-bottom:10px;
+.card h4{
+color:#94a3b8;
+margin-bottom:10px;
 }
 
 .amount{
-    font-size:30px;
-    font-weight:bold;
-    color:#10b981;
+font-size:30px;
+font-weight:700;
+color:#22c55e;
 }
 
-.status{
-    margin-top:20px;
-    background:#111827;
-    padding:20px;
-    border-radius:15px;
+.section{
+margin-top:25px;
+background:#0f172a;
+padding:20px;
+border-radius:15px;
 }
 
-.status span{
-    color:#10b981;
-    font-weight:bold;
+.section h2{
+margin-bottom:15px;
 }
 
-.transactions{
-    margin-top:20px;
-    background:#111827;
-    padding:20px;
-    border-radius:15px;
+.withdraw-form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
 }
 
-.transaction{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid #1f2937;
+.withdraw-form input{
+padding:14px;
+border:none;
+outline:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+}
+
+.withdraw-form button{
+grid-column:span 2;
+padding:15px;
+background:#22c55e;
+border:none;
+color:white;
+font-weight:600;
+border-radius:10px;
+cursor:pointer;
+}
+
+.withdraw-form button:hover{
+opacity:.9;
+}
+
+.table{
+width:100%;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:14px;
+text-align:left;
+border-bottom:1px solid #1e293b;
+}
+
+th{
+color:#94a3b8;
 }
 
 .green{
-    color:#10b981;
+color:#22c55e;
 }
 
 .red{
-    color:#ef4444;
+color:#ef4444;
 }
 
-.progress-section{
-    margin-top:20px;
-    background:#111827;
-    padding:20px;
-    border-radius:15px;
+.progress-box{
+margin-top:15px;
 }
 
 .progress{
-    width:100%;
-    background:#374151;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:10px;
+height:18px;
+background:#1e293b;
+border-radius:30px;
+overflow:hidden;
 }
 
 .progress-bar{
-    width:95%;
-    height:20px;
-    background:#10b981;
+height:100%;
+width:95%;
+background:#22c55e;
 }
 
-.footer{
-    margin-top:25px;
-    text-align:center;
-    color:#9ca3af;
-    font-size:13px;
+.notice{
+margin-top:15px;
+padding:12px;
+background:#132238;
+border-radius:10px;
 }
+
+@media(max-width:900px){
+
+.withdraw-form{
+grid-template-columns:1fr;
+}
+
+.withdraw-form button{
+grid-column:span 1;
+}
+
+}
+
+@media(max-width:768px){
+
+.sidebar{
+left:-260px;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.main{
+margin-left:0;
+}
+
+.menu-btn{
+display:block;
+}
+
+}
+
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="wrapper">
 
-    <div class="header">
-        <h1>Elon musk investment program</h1>
-        <p>Welcome Back, Michael Tapner</p>
-    </div>
+<div class="sidebar" id="sidebar">
 
-    <div class="grid">
+<div class="logo">
+Elon musk investment program
+</div>
 
-        <div class="card">
-            <h3>Portfolio Value</h3>
-            <div class="amount">£20,000,000.00</div>
-        </div>
+<ul>
+<li><a href="#">Dashboard</a></li>
+<li><a href="#">Portfolio</a></li>
+<li><a href="#">Withdraw Funds</a></li>
+<li><a href="#">Transactions</a></li>
+<li><a href="#">Statements</a></li>
+<li><a href="#">Security</a></li>
+<li><a href="#">Support</a></li>
+<li><a href="#">Logout</a></li>
+</ul>
 
-        <div class="card">
-            <h3>Available Balance</h3>
-            <div class="amount">£18,750,000.00</div>
-        </div>
+</div>
 
-    </div>
+<div class="main">
 
-    <div class="status">
-        <h2>Account Information</h2>
-        <br>
-        <p>Status: <span>VERIFIED ✓</span></p>
-        <p>Membership: Premium</p>
-        <p>Account ID: INV-2026-78412</p>
-    </div>
+<div class="topbar">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <div class="transactions">
-        <h2>Recent Transactions</h2>
+<div>
+<h2>Welcome Back</h2>
+<p>Michael Tapner</p>
+</div>
 
-        <div class="transaction">
-            <span>Investment Return</span>
-            <span class="green">+£5,000,000</span>
-        </div>
+<div class="profile">
+Verified Member ✓
+</div>
+</div>
 
-        <div class="transaction">
-            <span>Dividend Payment</span>
-            <span class="green">+£2,500,000</span>
-        </div>
+<div class="cards">
 
-        <div class="transaction">
-            <span>Withdrawal</span>
-            <span class="red">-£250,000</span>
-        </div>
+<div class="card">
+<h4>Portfolio Value</h4>
+<div class="amount">£20,000,000.00</div>
+</div>
 
-    </div>
+<div class="card">
+<h4>Available Balance</h4>
+<div class="amount">£18,750,000.00</div>
+</div>
 
-    <div class="progress-section">
-        <h2>Portfolio Growth</h2>
+<div class="card">
+<h4>Total Earnings</h4>
+<div class="amount">£7,250,000.00</div>
+</div>
 
-        <div class="progress">
-            <div class="progress-bar"></div>
-        </div>
+</div>
 
-        <p style="margin-top:10px;">95% Growth Target Achieved</p>
-    </div>
+<div class="section">
 
-    <div class="footer">
-        @Elon musk investment program
-    </div>
+<h2>Portfolio Progress</h2>
+
+<div class="progress-box">
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+</div>
+
+<div class="notice">
+95% Growth Target Achieved
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Withdrawal Request</h2>
+
+<form class="withdraw-form">
+
+<input type="text" placeholder="Amount">
+
+<input type="text" placeholder="Bank Name">
+
+<input type="text" placeholder="Account Number">
+
+<input type="text" placeholder="Account Holder">
+
+<button type="button" onclick="submitWithdrawal()">
+Submit Withdrawal Request
+</button>
+
+</form>
+
+</div>
+
+<div class="section">
+
+<h2>Recent Transactions</h2>
+
+<div class="table">
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Description</th>
+<th>Amount</th>
+</tr>
+
+<tr>
+<td>12 Jun 2026</td>
+<td>Investment Return</td>
+<td class="green">+£5,000,000</td>
+</tr>
+
+<tr>
+<td>05 Jun 2026</td>
+<td>Dividend Payment</td>
+<td class="green">+£2,500,000</td>
+</tr>
+
+<tr>
+<td>28 May 2026</td>
+<td>Withdrawal</td>
+<td class="red">-£250,000</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
 
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-    console.log("Dashboard Loaded");
-});
+
+function toggleMenu(){
+document.getElementById('sidebar').classList.toggle('active');
+}
+
+function submitWithdrawal(){
+
+alert(
+"Withdrawal request submitted successfully.\n\nReference ID: WD-" +
+Math.floor(Math.random()*1000000)
+);
+
+}
+
 </script>
 
 </body>
 </html>
-
-
-
-                           
-
