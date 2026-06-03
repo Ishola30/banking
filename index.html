@@ -407,7 +407,7 @@
         <main>
             <div class="dash-header">
                 <div>
-                    <h1 style="font-weight: 300; font-size: 1.8rem;">Welcome back, <span id="user-display" style="font-weight: 600; color: var(--accent-glow);">User</span></h1>
+                    <h1 style="font-weight: 300; font-size: 1.8rem;">Welcome back, <span id="user-display" style="font-weight: 600; color: var(--accent-glow);">Explorer</span></h1>
                     <p style="color: var(--text-muted); font-size: 0.85rem;">Secure Node Hierarchy: Level-1 Clearance Asset Management</p>
                 </div>
                 <div style="background: rgba(255,255,255,0.03); padding: 10px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
@@ -419,18 +419,18 @@
             <div class="grid-3">
                 <div class="card">
                     <h3>High-Yield Savings (Liquidity Pool)</h3>
-                    <div class="balance" id="savings-display">$742,008.91</div>
+                    <div class="balance" id="savings-display">€18,000,000.00</div>
                     <span class="yield-badge">5.42% Yield APY</span>
                 </div>
                 <div class="card">
                     <h3>Commercial Checking</h3>
-                    <div class="balance" id="checking-display">$14,250.82</div>
+                    <div class="balance" id="checking-display">€2,000,000.00</div>
                     <span class="yield-badge" style="background:rgba(255,255,255,0.05); color:#fff;">Standard Vault</span>
                 </div>
                 <div class="card">
                     <h3>SpaceX Project Capital Venture</h3>
-                    <div class="balance">$1,612,400.00</div>
-                    <span class="yield-badge" style="background: rgba(57, 181, 74, 0.15); color: var(--accent-green);">+18.4% Valuation Delta</span>
+                    <div class="balance">€20,000,000.00</div>
+                    <span class="yield-badge" style="background: rgba(57, 181, 74, 0.15); color: var(--accent-green);">Total Portfolio Assets</span>
                 </div>
             </div>
 
@@ -450,7 +450,7 @@
                             <option value="savings">From: High-Yield Savings</option>
                         </select>
                         <input type="text" id="transfer-dest" placeholder="Destination Vault Route Routing / ID" required>
-                        <input type="number" id="transfer-amount" placeholder="Amount ($)" min="1" step="any" required>
+                        <input type="number" id="transfer-amount" placeholder="Amount (€)" min="1" step="any" required>
                         <button type="submit" class="btn" style="padding: 10px; font-size: 0.85rem;">Initialize Ledger Remittance</button>
                     </form>
                 </div>
@@ -473,19 +473,19 @@
                                 <td>Starlink Constellation Equity Dividend</td>
                                 <td style="font-family: monospace;">SIB-9021-X7</td>
                                 <td style="color: var(--accent-green);">Settled (Confirmed)</td>
-                                <td style="color: var(--accent-green); font-weight: 600;">+$4,420.00</td>
+                                <td style="color: var(--accent-green); font-weight: 600;">+€4,420.00</td>
                             </tr>
                             <tr>
                                 <td>Mars Colony Supply-Chain Allocation</td>
                                 <td style="font-family: monospace;">SIB-4011-M3</td>
                                 <td style="color: var(--accent-green);">Settled (Confirmed)</td>
-                                <td style="color: var(--accent-red); font-weight: 600;">-$5,000.00</td>
+                                <td style="color: var(--accent-red); font-weight: 600;">-€5,000.00</td>
                             </tr>
                             <tr>
                                 <td>Compounded System Ecosystem Interest</td>
                                 <td style="font-family: monospace;">SIB-0012-I1</td>
                                 <td style="color: var(--accent-green);">Settled (Confirmed)</td>
-                                <td style="color: var(--accent-green); font-weight: 600;">+$812.45</td>
+                                <td style="color: var(--accent-green); font-weight: 600;">+€812.45</td>
                             </tr>
                         </tbody>
                     </table>
@@ -495,15 +495,15 @@
     </div>
 
     <script>
-        // AUTHENTICATION MATRIX
+        // AUTHENTICATION MATRIX (YOUR PROVIDED DEMO CREDENTIALS)
         const TARGET_USER = "Micheal";
         const TARGET_PASS = "Tapner";
         
         let secondsLeft = 5; 
 
-        // Core Financial Ledger Values
-        let checkBalance = 14250.82;
-        let saveBalance = 742008.91;
+        // Core Financial Ledger Values (Set to exactly 20 Million Euro Combined)
+        let checkBalance = 2000000.00;
+        let saveBalance = 18000000.00;
 
         const countdownElement = document.getElementById('countdown');
         const splashScreen = document.getElementById('splash-screen');
@@ -533,8 +533,10 @@
             const errorMsg = document.getElementById('error-message');
             const userDisplay = document.getElementById('user-display');
 
+            // Verification step mapping user inputs to predefined variables
             if (userInput === TARGET_USER && passInput === TARGET_PASS) {
-                userDisplay.textContent = userInput;
+                // FORCE ACCOUNT DISPLAY TO LOAD EXACT DEMO NAME REQUESTED
+                userDisplay.textContent = "Micheal J Tapner";
                 loginScreen.classList.remove('active');
                 dashboardScreen.classList.add('active');
                 renderAnalyticsChart(); 
@@ -555,11 +557,11 @@
             if (source === 'checking') {
                 if (amount > checkBalance) { alert("🚨 Terminal Alert: Insufficient Liquid Checking Funds!"); return; }
                 checkBalance -= amount;
-                document.getElementById('checking-display').textContent = "$" + checkBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('checking-display').textContent = "€" + checkBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             } else {
                 if (amount > saveBalance) { alert("🚨 Terminal Alert: Insufficient Vault Pool Allocation Funds!"); return; }
                 saveBalance -= amount;
-                document.getElementById('savings-display').textContent = "$" + saveBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+                document.getElementById('savings-display').textContent = "€" + saveBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
             }
 
             // Append Dynamic Transaction Row
@@ -571,7 +573,7 @@
                 <td>Remittance to Wire Target [${destination}]</td>
                 <td style="font-family: monospace;">${randomHash}</td>
                 <td style="color: var(--accent-glow);">Settled (Ledger Confirmed)</td>
-                <td style="color: var(--accent-red); font-weight: 600;">-$${amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
+                <td style="color: var(--accent-red); font-weight: 600;">-€${amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
             `;
             
             ledgerBody.insertBefore(newRow, ledgerBody.firstChild);
@@ -588,8 +590,8 @@
                 data: {
                     labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current Orbit'],
                     datasets: [{
-                        label: 'Ecosystem Portfolio Valuation ($ Net Value)',
-                        data: [500000, 620000, 590000, 710000, 756259],
+                        label: 'Ecosystem Portfolio Valuation (€ Net Value)',
+                        data: [12000000, 15500000, 14200000, 19100000, 20000000],
                         borderColor: '#00b4d8',
                         backgroundColor: 'rgba(0, 180, 216, 0.05)',
                         borderWidth: 2,
@@ -611,3 +613,5 @@
     </script>
 </body>
 </html>
+
+        
