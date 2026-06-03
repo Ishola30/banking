@@ -1,616 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SpaceX Investment Bank (SIB)</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        /* --- GLOBAL STYLES & THEMING --- */
-        :root {
-            --bg-space: #06070d;
-            --bg-surface: #0b0d19;
-            --text-light: #ffffff;
-            --text-muted: #8a99ad;
-            --accent-blue: #005288;
-            --accent-glow: #00b4d8;
-            --accent-green: #39b54a;
-            --accent-red: #ff4d4d;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --border-glow: rgba(0, 180, 216, 0.2);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Investment Portal</title>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        body {
-            background-color: var(--bg-space);
-            color: var(--text-light);
-            overflow-x: hidden;
-            height: 100vh;
-        }
+<style>
 
-        .screen {
-            display: none;
-            height: 100vh;
-            width: 100vw;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-        .active {
-            display: flex !important;
-        }
+body{
+background:#08111f;
+color:#fff;
+}
 
-        /* --- SCREEN 1: SPLASH/LOADING --- */
-        #splash-screen {
-            background: radial-gradient(circle at center, #111625 0%, #06070d 100%);
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
+.wrapper{
+display:flex;
+min-height:100vh;
+}
 
-        .logo-container {
-            text-align: center;
-            animation: pulse 2s infinite ease-in-out;
-        }
+.sidebar{
+width:260px;
+background:#0f172a;
+padding:20px;
+position:fixed;
+height:100%;
+left:0;
+top:0;
+transition:.3s;
+z-index:1000;
+}
 
-        .logo-text {
-            font-size: 4rem;
-            font-weight: 900;
-            letter-spacing: 8px;
-            background: linear-gradient(45deg, #ffffff, var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.logo{
+font-size:24px;
+font-weight:700;
+margin-bottom:30px;
+color:#22c55e;
+}
 
-        .logo-sub {
-            font-size: 0.9rem;
-            letter-spacing: 5px;
-            color: var(--text-muted);
-            margin-top: 5px;
-            text-transform: uppercase;
-        }
+.sidebar ul{
+list-style:none;
+}
 
-        .loader-timer {
-            margin-top: 40px;
-            font-size: 0.85rem;
-            color: var(--accent-glow);
-            font-family: monospace;
-            letter-spacing: 1px;
-        }
+.sidebar ul li{
+margin:10px 0;
+}
 
-        /* --- SCREEN 2: LOGIN --- */
-        #login-screen {
-            justify-content: center;
-            align-items: center;
-            background: #06070d;
-        }
+.sidebar ul li a{
+display:block;
+padding:14px;
+text-decoration:none;
+color:white;
+border-radius:10px;
+transition:.3s;
+}
 
-        .login-card {
-            background: var(--bg-surface);
-            padding: 40px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            width: 90%;
-            max-width: 420px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-        }
+.sidebar ul li a:hover{
+background:#1e293b;
+}
 
-        .login-card h2 {
-            margin-bottom: 8px;
-            font-weight: 500;
-            letter-spacing: 1px;
-        }
+.main{
+margin-left:260px;
+flex:1;
+padding:20px;
+}
 
-        .input-group {
-            margin-bottom: 20px;
-        }
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
 
-        .input-group label {
-            display: block;
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.menu-btn{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
 
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 8px;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.3s;
-        }
+.profile{
+background:#0f172a;
+padding:10px 15px;
+border-radius:10px;
+}
 
-        .input-group input:focus {
-            border-color: var(--accent-glow);
-            box-shadow: 0 0 12px var(--border-glow);
-        }
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
 
-        .btn {
-            width: 100%;
-            padding: 14px;
-            background: var(--accent-blue);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+.card{
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+box-shadow:0 0 15px rgba(0,0,0,.2);
+}
 
-        .btn:hover {
-            background: #006aa3;
-            box-shadow: 0 0 20px rgba(0, 82, 136, 0.6);
-        }
+.card h4{
+color:#94a3b8;
+margin-bottom:10px;
+}
 
-        .error-msg {
-            color: var(--accent-red);
-            font-size: 0.85rem;
-            margin-top: 15px;
-            text-align: center;
-            display: none;
-        }
+.amount{
+font-size:30px;
+font-weight:700;
+color:#22c55e;
+}
 
-        /* --- SCREEN 3: DASHBOARD (RESPONSIVE) --- */
-        #dashboard-screen {
-            display: flex;
-            flex-direction: row;
-        }
+.section{
+margin-top:25px;
+background:#0f172a;
+padding:20px;
+border-radius:15px;
+}
 
-        sidebar {
-            width: 260px;
-            background: var(--bg-surface);
-            border-right: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            flex-shrink: 0;
-        }
+.section h2{
+margin-bottom:15px;
+}
 
-        .nav-links {
-            list-style: none;
-            margin-top: 40px;
-        }
+.withdraw-form{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
 
-        .nav-links li {
-            padding: 14px 16px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            color: var(--text-muted);
-            transition: 0.2s;
-            font-weight: 500;
-        }
+.withdraw-form input{
+padding:14px;
+border:none;
+outline:none;
+border-radius:10px;
+background:#1e293b;
+color:white;
+}
 
-        .nav-links li.active-nav, .nav-links li:hover {
-            background: var(--card-bg);
-            color: white;
-            border-left: 4px solid var(--accent-glow);
-        }
+.withdraw-form button{
+grid-column:span 2;
+padding:15px;
+background:#22c55e;
+border:none;
+color:white;
+font-weight:600;
+border-radius:10px;
+cursor:pointer;
+}
 
-        main {
-            flex-grow: 1;
-            padding: 40px;
-            overflow-y: auto;
-            background: #080a14;
-        }
+.withdraw-form button:hover{
+opacity:.9;
+}
 
-        .dash-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
+.table{
+width:100%;
+overflow-x:auto;
+}
 
-        /* Metrics Cards */
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+table{
+width:100%;
+border-collapse:collapse;
+}
 
-        .card {
-            background: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 16px;
-            padding: 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
+th,td{
+padding:14px;
+text-align:left;
+border-bottom:1px solid #1e293b;
+}
 
-        .card h3 {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
+th{
+color:#94a3b8;
+}
 
-        .balance {
-            font-size: 2rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
+.green{
+color:#22c55e;
+}
 
-        .yield-badge {
-            display: inline-block;
-            background: rgba(0, 180, 216, 0.12);
-            color: var(--accent-glow);
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            margin-top: 10px;
-            font-weight: 600;
-        }
+.red{
+color:#ef4444;
+}
 
-        /* Layout splits for Features */
-        .dash-split {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
+.progress-box{
+margin-top:15px;
+}
 
-        @media (max-width: 1024px) {
-            .dash-split {
-                grid-template-columns: 1fr;
-            }
-        }
+.progress{
+height:18px;
+background:#1e293b;
+border-radius:30px;
+overflow:hidden;
+}
 
-        /* Forms & Interactive Areas */
-        .interactive-form input, .interactive-form select {
-            width: 100%;
-            padding: 12px;
-            background: rgba(0,0,0,0.3);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 8px;
-            color: white;
-            margin-bottom: 15px;
-            outline: none;
-        }
-        
-        .interactive-form input:focus {
-            border-color: var(--accent-glow);
-        }
+.progress-bar{
+height:100%;
+width:95%;
+background:#22c55e;
+}
 
-        /* Responsive Utility Tables */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-        }
+.notice{
+margin-top:15px;
+padding:12px;
+background:#132238;
+border-radius:10px;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            min-width: 500px;
-        }
+@media(max-width:900px){
 
-        th, td {
-            padding: 16px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
+.withdraw-form{
+grid-template-columns:1fr;
+}
 
-        th {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+.withdraw-form button{
+grid-column:span 1;
+}
 
-        /* Mobile Responsive Header Bar */
-        .mobile-header {
-            display: none;
-            width: 100%;
-            background: var(--bg-surface);
-            padding: 15px 20px;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
+}
 
-        /* --- MEDIA QUERIES FOR RESPONSIVENESS --- */
-        @media (max-width: 768px) {
-            #dashboard-screen {
-                flex-direction: column;
-            }
-            sidebar {
-                display: none; /* Hide sidebar on mobile ports */
-            }
-            .mobile-header {
-                display: flex;
-            }
-            main {
-                padding: 20px;
-            }
-            .logo-text {
-                font-size: 3rem;
-            }
-        }
+@media(max-width:768px){
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.02); opacity: 1; }
-        }
-    </style>
+.sidebar{
+left:-260px;
+}
+
+.sidebar.active{
+left:0;
+}
+
+.main{
+margin-left:0;
+}
+
+.menu-btn{
+display:block;
+}
+
+}
+
+</style>
 </head>
 <body>
 
-    <div id="splash-screen" class="screen active">
-        <div class="logo-container">
-            <div class="logo-text">SIB</div>
-            <div class="logo-sub">SpaceX Investment Bank</div>
-        </div>
-        <div class="loader-timer">SYNCHRONIZING SECURE ORBITAL LEDGER... <span id="countdown">5</span>s</div>
-    </div>
+<div class="wrapper">
 
-    <div id="login-screen" class="screen">
-        <div class="login-card">
-            <h2 style="font-size: 1.5rem;">Secure Gateway</h2>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">Enter Orbital Account Credentials</p>
-            
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="input-group">
-                    <label for="username">Access ID (Username)</label>
-                    <input type="text" id="username" required autocomplete="off">
-                </div>
-                <div class="input-group">
-                    <label for="password">Security Passkey (Password)</label>
-                    <input type="password" id="password" required>
-                </div>
-                <button type="submit" class="btn">Authorize Terminal Connection</button>
-                <div id="error-message" class="error-msg">❌ Terminal Denied: Check Access Credentials</div>
-            </form>
-        </div>
-    </div>
+<div class="sidebar" id="sidebar">
 
-    <div id="dashboard-screen" class="screen">
-        <div class="mobile-header">
-            <div style="font-weight: 800; letter-spacing: 2px;">SIB // MOBILE</div>
-            <div style="color: var(--accent-red); font-size: 0.85rem;" onclick="location.reload()">Exit</div>
-        </div>
+<div class="logo">
+Investment Portal
+</div>
 
-        <sidebar>
-            <div>
-                <div style="font-weight: 900; letter-spacing: 3px; font-size: 1.4rem; color: #fff;">SIB</div>
-                <div style="font-size: 0.65rem; color: var(--accent-glow); letter-spacing: 1px;">SPACEX INVESTMENT SYSTEM</div>
-                <ul class="nav-links">
-                    <li class="active-nav">Account Control</li>
-                    <li>Global Capital Wire</li>
-                    <li>Asset Portfolios</li>
-                    <li>Security Vault</li>
-                </ul>
-            </div>
-            <div style="color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: 0.2s;" onclick="location.reload()" onmouseover="this.style.color='#ff4d4d'" onmouseout="this.style.color='var(--text-muted)'">
-                🔒 Terminate Session
-            </div>
-        </sidebar>
+<ul>
+<li><a href="#">Dashboard</a></li>
+<li><a href="#">Portfolio</a></li>
+<li><a href="#">Withdraw Funds</a></li>
+<li><a href="#">Transactions</a></li>
+<li><a href="#">Statements</a></li>
+<li><a href="#">Security</a></li>
+<li><a href="#">Support</a></li>
+<li><a href="#">Logout</a></li>
+</ul>
 
-        <main>
-            <div class="dash-header">
-                <div>
-                    <h1 style="font-weight: 300; font-size: 1.8rem;">Welcome back, <span id="user-display" style="font-weight: 600; color: var(--accent-glow);">Explorer</span></h1>
-                    <p style="color: var(--text-muted); font-size: 0.85rem;">Secure Node Hierarchy: Level-1 Clearance Asset Management</p>
-                </div>
-                <div style="background: rgba(255,255,255,0.03); padding: 10px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.05);">
-                    <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">System Blended Yield APY</span>
-                    <div style="color: var(--accent-green); font-weight: 700; font-size: 1.3rem;">5.42%</div>
-                </div>
-            </div>
+</div>
 
-            <div class="grid-3">
-                <div class="card">
-                    <h3>High-Yield Savings (Liquidity Pool)</h3>
-                    <div class="balance" id="savings-display">€18,000,000.00</div>
-                    <span class="yield-badge">5.42% Yield APY</span>
-                </div>
-                <div class="card">
-                    <h3>Commercial Checking</h3>
-                    <div class="balance" id="checking-display">€2,000,000.00</div>
-                    <span class="yield-badge" style="background:rgba(255,255,255,0.05); color:#fff;">Standard Vault</span>
-                </div>
-                <div class="card">
-                    <h3>SpaceX Project Capital Venture</h3>
-                    <div class="balance">€20,000,000.00</div>
-                    <span class="yield-badge" style="background: rgba(57, 181, 74, 0.15); color: var(--accent-green);">Total Portfolio Assets</span>
-                </div>
-            </div>
+<div class="main">
 
-            <div class="dash-split">
-                <div class="card">
-                    <h3 style="margin-bottom: 20px;">Asset Yield Trend Matrix</h3>
-                    <div style="position: relative; height: 220px; width: 100%;">
-                        <canvas id="yieldChart"></canvas>
-                    </div>
-                </div>
+<div class="topbar">
+<div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-                <div class="card">
-                    <h3>Instant Orbital Capital Transfer</h3>
-                    <form class="interactive-form" onsubmit="executeTransfer(event)">
-                        <select id="transfer-source" required>
-                            <option value="checking">From: Commercial Checking</option>
-                            <option value="savings">From: High-Yield Savings</option>
-                        </select>
-                        <input type="text" id="transfer-dest" placeholder="Destination Vault Route Routing / ID" required>
-                        <input type="number" id="transfer-amount" placeholder="Amount (€)" min="1" step="any" required>
-                        <button type="submit" class="btn" style="padding: 10px; font-size: 0.85rem;">Initialize Ledger Remittance</button>
-                    </form>
-                </div>
-            </div>
+<div>
+<h2>Welcome Back</h2>
+<p>Michael Tapner</p>
+</div>
 
-            <div class="card">
-                <h3 style="color: white; font-size: 0.9rem; margin-bottom: 15px;">Secure Ledger Remittance History</h3>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Remittance Description</th>
-                                <th>Transaction Ledger Hash</th>
-                                <th>Status Matrix</th>
-                                <th>Value Shift</th>
-                            </tr>
-                        </thead>
-                        <tbody id="ledger-entries">
-                            <tr>
-                                <td>Starlink Constellation Equity Dividend</td>
-                                <td style="font-family: monospace;">SIB-9021-X7</td>
-                                <td style="color: var(--accent-green);">Settled (Confirmed)</td>
-                                <td style="color: var(--accent-green); font-weight: 600;">+€4,420.00</td>
-                            </tr>
-                            <tr>
-                                <td>Mars Colony Supply-Chain Allocation</td>
-                                <td style="font-family: monospace;">SIB-4011-M3</td>
-                                <td style="color: var(--accent-green);">Settled (Confirmed)</td>
-                                <td style="color: var(--accent-red); font-weight: 600;">-€5,000.00</td>
-                            </tr>
-                            <tr>
-                                <td>Compounded System Ecosystem Interest</td>
-                                <td style="font-family: monospace;">SIB-0012-I1</td>
-                                <td style="color: var(--accent-green);">Settled (Confirmed)</td>
-                                <td style="color: var(--accent-green); font-weight: 600;">+€812.45</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </main>
-    </div>
+<div class="profile">
+Verified Member ✓
+</div>
+</div>
 
-    <script>
-        // AUTHENTICATION MATRIX (YOUR PROVIDED DEMO CREDENTIALS)
-        const TARGET_USER = "Micheal";
-        const TARGET_PASS = "Tapner";
-        
-        let secondsLeft = 5; 
+<div class="cards">
 
-        // Core Financial Ledger Values (Set to exactly 20 Million Euro Combined)
-        let checkBalance = 2000000.00;
-        let saveBalance = 18000000.00;
+<div class="card">
+<h4>Portfolio Value</h4>
+<div class="amount">£20,000,000.00</div>
+</div>
 
-        const countdownElement = document.getElementById('countdown');
-        const splashScreen = document.getElementById('splash-screen');
-        const loginScreen = document.getElementById('login-screen');
-        const dashboardScreen = document.getElementById('dashboard-screen');
+<div class="card">
+<h4>Available Balance</h4>
+<div class="amount">£18,750,000.00</div>
+</div>
 
-        countdownElement.textContent = secondsLeft;
+<div class="card">
+<h4>Total Earnings</h4>
+<div class="amount">£7,250,000.00</div>
+</div>
 
-        // 1. Initial Launch Countdown Sequence
-        const timer = setInterval(() => {
-            secondsLeft--;
-            countdownElement.textContent = secondsLeft;
+</div>
 
-            if (secondsLeft <= 0) {
-                clearInterval(timer);
-                splashScreen.classList.remove('active');
-                loginScreen.classList.add('active');
-            }
-        }, 1000);
+<div class="section">
 
-        // 2. Security Login Module
-        function handleLogin(event) {
-            event.preventDefault(); 
-            
-            const userInput = document.getElementById('username').value;
-            const passInput = document.getElementById('password').value;
-            const errorMsg = document.getElementById('error-message');
-            const userDisplay = document.getElementById('user-display');
+<h2>Portfolio Progress</h2>
 
-            // Verification step mapping user inputs to predefined variables
-            if (userInput === TARGET_USER && passInput === TARGET_PASS) {
-                // FORCE ACCOUNT DISPLAY TO LOAD EXACT DEMO NAME REQUESTED
-                userDisplay.textContent = "Micheal J Tapner";
-                loginScreen.classList.remove('active');
-                dashboardScreen.classList.add('active');
-                renderAnalyticsChart(); 
-            } else {
-                errorMsg.style.display = 'block';
-                setTimeout(() => { errorMsg.style.display = 'none'; }, 4000);
-            }
-        }
+<div class="progress-box">
+<div class="progress">
+<div class="progress-bar"></div>
+</div>
+</div>
 
-        // 3. Financial Execution Module (Capital Wire Remittance)
-        function executeTransfer(event) {
-            event.preventDefault();
-            
-            const source = document.getElementById('transfer-source').value;
-            const destination = document.getElementById('transfer-dest').value;
-            const amount = parseFloat(document.getElementById('transfer-amount').value);
+<div class="notice">
+95% Growth Target Achieved
+</div>
 
-            if (source === 'checking') {
-                if (amount > checkBalance) { alert("🚨 Terminal Alert: Insufficient Liquid Checking Funds!"); return; }
-                checkBalance -= amount;
-                document.getElementById('checking-display').textContent = "€" + checkBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            } else {
-                if (amount > saveBalance) { alert("🚨 Terminal Alert: Insufficient Vault Pool Allocation Funds!"); return; }
-                saveBalance -= amount;
-                document.getElementById('savings-display').textContent = "€" + saveBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            }
+</div>
 
-            // Append Dynamic Transaction Row
-            const ledgerBody = document.getElementById('ledger-entries');
-            const randomHash = "SIB-" + Math.floor(1000 + Math.random() * 9000) + "-W" + Math.floor(Math.random() * 9);
-            const newRow = document.createElement('tr');
-            
-            newRow.innerHTML = `
-                <td>Remittance to Wire Target [${destination}]</td>
-                <td style="font-family: monospace;">${randomHash}</td>
-                <td style="color: var(--accent-glow);">Settled (Ledger Confirmed)</td>
-                <td style="color: var(--accent-red); font-weight: 600;">-€${amount.toLocaleString('en-US', {minimumFractionDigits: 2})}</td>
-            `;
-            
-            ledgerBody.insertBefore(newRow, ledgerBody.firstChild);
-            alert(`✅ Capital remittance transaction completely broadcasted to SIB ledger ecosystem successfully! Ref: ${randomHash}`);
-            document.getElementById('transfer-amount').value = '';
-            document.getElementById('transfer-dest').value = '';
-        }
+<div class="section">
 
-        // 4. Data Metrics Visualization Engine
-        function renderAnalyticsChart() {
-            const ctx = document.getElementById('yieldChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Q1', 'Q2', 'Q3', 'Q4', 'Current Orbit'],
-                    datasets: [{
-                        label: 'Ecosystem Portfolio Valuation (€ Net Value)',
-                        data: [12000000, 15500000, 14200000, 19100000, 20000000],
-                        borderColor: '#00b4d8',
-                        backgroundColor: 'rgba(0, 180, 216, 0.05)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8a99ad' } },
-                        x: { grid: { display: false }, ticks: { color: '#8a99ad' } }
-                    }
-                }
-            });
-        }
-    </script>
+<h2>Withdrawal Request</h2>
+
+<form class="withdraw-form">
+
+<input type="text" placeholder="Amount">
+
+<input type="text" placeholder="Bank Name">
+
+<input type="text" placeholder="Account Number">
+
+<input type="text" placeholder="Account Holder">
+
+<button type="button" onclick="submitWithdrawal()">
+Submit Withdrawal Request
+</button>
+
+</form>
+
+</div>
+
+<div class="section">
+
+<h2>Recent Transactions</h2>
+
+<div class="table">
+
+<table>
+
+<tr>
+<th>Date</th>
+<th>Description</th>
+<th>Amount</th>
+</tr>
+
+<tr>
+<td>12 Jun 2026</td>
+<td>Investment Return</td>
+<td class="green">+£5,000,000</td>
+</tr>
+
+<tr>
+<td>05 Jun 2026</td>
+<td>Dividend Payment</td>
+<td class="green">+£2,500,000</td>
+</tr>
+
+<tr>
+<td>28 May 2026</td>
+<td>Withdrawal</td>
+<td class="red">-£250,000</td>
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+document.getElementById('sidebar').classList.toggle('active');
+}
+
+function submitWithdrawal(){
+
+alert(
+"Withdrawal request submitted successfully.\n\nReference ID: WD-" +
+Math.floor(Math.random()*1000000)
+);
+
+}
+
+</script>
+
 </body>
 </html>
 
